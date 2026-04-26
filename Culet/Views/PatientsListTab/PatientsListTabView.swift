@@ -29,10 +29,13 @@ struct PatientsListTabView: View {
           }
           ToolbarItem(placement: .automatic) {
             Menu("Menu", systemImage: "ellipsis") {
-              // MARK: Archive Button
-              Button("Архив", systemImage: "archivebox") {
-                viewModel.openArchive()
-              }
+              // MARK: Open Archive Button
+              NavigationLink(destination: {
+                ArchivedPatientsListView(isLastNameInvisible: viewModel.isLastNameInvisible)
+              }, label: {
+                Label("Архив", systemImage: "archivebox")
+              })
+              
               // MARK: Lastname Visibilty Toggle
               Toggle("Скрыть фамилии", systemImage: "eye.slash", isOn: $viewModel.isLastNameInvisible)
             }

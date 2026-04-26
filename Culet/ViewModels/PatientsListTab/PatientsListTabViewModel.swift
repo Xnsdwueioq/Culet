@@ -39,14 +39,33 @@ final class PatientsListTabViewModel {
     self.patientGroupingService = patientGroupingService
   }
   
+  // MARK: - Patient Control
+  func deletePatient(patient: Patient, modelContext: ModelContext) {
+    Task {
+      let debounce = 250
+      try? await Task.sleep(for: .milliseconds(debounce))
+      
+      await MainActor.run {
+        modelContext.delete(patient)
+      }
+    }
+  }
+  
   // MARK: - Toolbar Functions
   func addPatient(modelContext: ModelContext) {
     //TODO: Add Patient
     addMockPatient(modelContext: modelContext)
   }
   
-  func openArchive() {
-    //TODO: Open Archive
+  func toggleArchive(patient: Patient) {
+    Task {
+      let debounce = 250
+      try? await Task.sleep(for: .milliseconds(debounce))
+      
+      await MainActor.run {
+        patient.isArchived.toggle()
+      }
+    }
   }
   
   // MARK: - DEBUG
