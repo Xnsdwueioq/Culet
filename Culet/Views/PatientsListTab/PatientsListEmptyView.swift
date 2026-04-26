@@ -13,25 +13,35 @@ struct PatientsListEmptyView: View {
   
   init(addPatientAction: (() -> Void)? = nil) {
     self.addPatientAction = addPatientAction
+    self.isArchive = addPatientAction == nil
   }
   
   var body: some View {
-    ContentUnavailableView(
-      label: {
-        Label("Список медкарт пуст", systemImage: "person.crop.rectangle.stack")
-      },
-      description: {
-        Text("Добавьте медкарту, чтобы начать работу")
-      },
-      actions: {
-        if let addPatientAction {
-          Button("Добавить") {
-            addPatientAction()
+    if isArchive {
+      ContentUnavailableView(
+        "Архив пуст",
+        systemImage: "archivebox",
+        description:
+          Text("Перемещайте в архив медкарты, которые больше не нужны в работе")
+      )
+    } else {
+      ContentUnavailableView(
+        label: {
+          Label("Список медкарт пуст", systemImage: "person.crop.rectangle.stack")
+        },
+        description: {
+          Text("Добавьте медкарту, чтобы начать работу")
+        },
+        actions: {
+          if let addPatientAction {
+            Button("Добавить") {
+              addPatientAction()
+            }
+            .buttonStyle(.glassProminent)
           }
-          .buttonStyle(.glassProminent)
         }
-      }
-    )
+      )
+    }
   }
 }
 
