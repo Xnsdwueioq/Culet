@@ -25,8 +25,8 @@ final class PatientsListTabViewModel {
   // MARK: - DEBUG
   private func addMockPatient(modelContext: ModelContext) {
     let newPatient = Patient(
-      fullName: FullName(firstName: "Иван\(Int.random(in: 1..<10000))", lastName: "Иванов", middleName: "Иванович"),
-      birthday: Date(),
+      fullName: FullName(firstName: "Иван", lastName: "Иванов\(Int.random(in: 1..<10000))", middleName: "Иванович"),
+      birthday: Date(timeIntervalSince1970: 1),
       sex: .male,
       mobileNumber: "+7 (999) 123-45-67"
     )
