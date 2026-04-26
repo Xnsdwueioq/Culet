@@ -11,5 +11,5 @@ nonisolated
 struct FullName: Codable, Equatable, Hashable {
   var firstName: String
   var lastName: String
-  var patronymic: String?
+  var middleName: String?
 }
