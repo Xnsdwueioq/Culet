@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct PatientsListSection {
-  let id = UUID()
+struct PatientsListSection: Identifiable {
   let period: TimePeriod
   var patients: [Patient]
+  
+  let id = UUID()
 }

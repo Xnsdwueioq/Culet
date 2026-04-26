@@ -10,7 +10,19 @@ import SwiftData
 
 @Observable
 final class PatientsListTabViewModel {
+  private let patientGroupingService: PatientGroupingService
+  
   var isLastNameInvisible: Bool = false
+  var groupedPatients: [PatientsListSection] = []
+  
+  init(patientGroupingService: PatientGroupingService = PatientGroupingService()) {
+    self.patientGroupingService = patientGroupingService
+  }
+  
+  // MARK: - List Logic
+  func updateGroupedPatients(patients: [Patient]) {
+    self.groupedPatients = patientGroupingService.group(patients: patients)
+  }
   
   // MARK: - Toolbar Functions
   func addPatient(modelContext: ModelContext) {

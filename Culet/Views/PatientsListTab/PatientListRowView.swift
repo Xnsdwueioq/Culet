@@ -8,11 +8,57 @@
 import SwiftUI
 
 struct PatientListRowView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+  let patient: Patient
+  let isAbbriviated: Bool
+  let isSelected: Bool
+  
+  var body: some View {
+    HStack {
+      VStack(alignment: .leading, spacing: 10) {
+        HStack {
+          // MARK: Patient Name
+          Text(patient.fullName.formattedName(isAbbreviated: isAbbriviated))
+            .fontWeight(.medium)
+          
+          // MARK: Patient Age
+          Text(patient.getAge().formatted())
+            .foregroundStyle(.secondary)
+        }
+        .foregroundStyle(.primary)
+        
+        // MARK: Patient Card Creation Date
+        Text(patient.creationDate.formatted())
+          .foregroundStyle(.secondary)
+      }
+      
+      Spacer()
+      
+      if isSelected {
+        Image(systemName: "checkmark")
+          .foregroundStyle(.green)
+          .fontWeight(.bold)
+          .padding(.horizontal, 10)
+      }
     }
+  }
 }
 
 #Preview {
-    PatientListRowView()
+  List {
+    PatientListRowView(
+      patient: Patient(
+        fullName:
+          FullName(
+            firstName: "Марк",
+            lastName: "Валентинов",
+            middleName: "Антонович"
+          ),
+        birthday: Date().advanced(by: -60*60*24*365*30),
+        sex: .male,
+        mobileNumber: "89994433220"
+      ),
+      isAbbriviated: false,
+      isSelected: true
+    )
+  }
 }
