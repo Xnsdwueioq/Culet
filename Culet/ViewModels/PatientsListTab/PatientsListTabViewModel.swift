@@ -13,15 +13,30 @@ final class PatientsListTabViewModel {
   private let patientGroupingService: PatientGroupingService
   
   var isLastNameInvisible: Bool = false
-  var groupedPatients: [PatientsListSection] = []
+  var searchableText: String = ""
+  
+  var patients: [Patient] = []
+  var groupedPatients: [PatientsListSection] {
+    guard !searchableText.isEmpty else {
+      return patientGroupingService.group(patients: patients)
+    }
+    
+    let query = searchableText.lowercased()
+    
+    // Patients Filtering
+    let filteredPatients = patients.filter { patient in
+      let fullName = patient.fullName
+      let fullNameString = "\(fullName.firstName) \(fullName.lastName) \(fullName.middleName ?? "")".lowercased()
+      let condition = fullNameString.contains(query)
+      
+      return condition
+    }
+    
+    return patientGroupingService.group(patients: filteredPatients)
+  }
   
   init(patientGroupingService: PatientGroupingService = PatientGroupingService()) {
     self.patientGroupingService = patientGroupingService
-  }
-  
-  // MARK: - List Logic
-  func updateGroupedPatients(patients: [Patient]) {
-    self.groupedPatients = patientGroupingService.group(patients: patients)
   }
   
   // MARK: - Toolbar Functions
