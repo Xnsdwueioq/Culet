@@ -1,5 +1,5 @@
 //
-//  FullNameFormattingTest.swift
+//  PatientFormattingTests.swift
 //  CuletTests
 //
 //  Created by Eyhciurmrn Zmpodackrl on 26.04.2026.
@@ -9,7 +9,7 @@ import Testing
 @testable import Culet
 
 @Suite("Тестирование форматирования полного имени пацента")
-struct FullNameFormattingTest {
+struct PatientFormattingTests {
   
   @Test("Форматирование имени для списка", arguments: [
     (FullName(firstName: "Ольга", lastName: "Петрова", middleName: "Сергеевна"), "Петрова О. С.", false),
@@ -32,4 +32,6 @@ struct FullNameFormattingTest {
     // Assert
     #expect(shorName == expected, "Ожидалось: \(expected), фактически: \(shorName)")
   }
+
+  
 }
