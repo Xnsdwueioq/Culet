@@ -17,9 +17,11 @@ struct PatientsListView: View {
   var body: some View {
     Group {
       if viewModel.patients.isEmpty {
-        PatientsListEmptyView(addPatientAction: {
-          viewModel.addPatient(modelContext: modelContext)
-        })
+        List {
+          PatientsListEmptyView(addPatientAction: {
+            viewModel.addPatient(modelContext: modelContext)
+          })
+        }
       } else {
         List(viewModel.groupedPatients) { section in
           Section(section.period.rawValue) {
