@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PatientListRowView: View {
   let patient: Patient
-  let isAbbriviated: Bool
+  let isAbbreviated: Bool
   let isSelected: Bool
   
   var body: some View {
@@ -17,7 +17,7 @@ struct PatientListRowView: View {
       VStack(alignment: .leading, spacing: 10) {
         HStack {
           // MARK: Patient Name
-          Text(patient.fullName.formattedName(isAbbreviated: isAbbriviated))
+          Text(patient.fullName.formattedName(isAbbreviated: isAbbreviated))
             .fontWeight(.medium)
           
           // MARK: Patient Age
@@ -57,7 +57,7 @@ struct PatientListRowView: View {
         sex: .male,
         mobileNumber: "89994433220"
       ),
-      isAbbriviated: false,
+      isAbbreviated: false,
       isSelected: true
     )
   }

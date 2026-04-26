@@ -10,7 +10,7 @@ import SwiftData
 
 struct PatientsListView: View {
   @Environment(\.modelContext) private var modelContext
-  @Query(sort: \Patient.birthday) private var patients: [Patient]
+  @Query(sort: \Patient.creationDate, order: .reverse) private var patients: [Patient]
   
   let viewModel: PatientsListTabViewModel
   
@@ -20,7 +20,7 @@ struct PatientsListView: View {
         ForEach(section.patients) { patient in
           PatientListRowView(
             patient: patient,
-            isAbbriviated: viewModel.isLastNameInvisible,
+            isAbbreviated: viewModel.isLastNameInvisible,
             isSelected: true
           )
         }
