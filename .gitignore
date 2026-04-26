@@ -1,0 +1,15 @@
+build/
+DerivedData/
+*.hmap
+*.ipa
+*.xcuserstate
+xcshememanagement.plist
+
+xcuserdata/
+
+.build/
+.swiftpm/
+
+.DS_Store
+*.swp
+*.lock

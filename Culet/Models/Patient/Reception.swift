@@ -1,0 +1,24 @@
+//
+//  Reception.swift
+//  Drafts
+//
+//  Created by Eyhciurmrn Zmpodackrl on 26.04.2026.
+//
+
+import Foundation
+import SwiftData
+
+@Model
+final class Reception {
+  var date: Date
+  var notes: String
+  
+  // For future measurements
+  
+  var patient: Patient?
+  
+  init(date: Date = .now, notes: String = "") {
+    self.date = date
+    self.notes = notes
+  }
+}
