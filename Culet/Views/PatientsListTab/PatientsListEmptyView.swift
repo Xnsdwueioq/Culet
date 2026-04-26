@@ -8,16 +8,11 @@
 import SwiftUI
 
 struct PatientsListEmptyView: View {
-  var addPatientAction: (() -> ())?
+  var addPatientAction: (() -> Void)?
   var isArchive: Bool = false
   
-  init(addPatientAction: @escaping () -> Void) {
+  init(addPatientAction: (() -> Void)? = nil) {
     self.addPatientAction = addPatientAction
-    self.isArchive = false
-  }
-  
-  init() {
-    self.isArchive = true
   }
   
   var body: some View {
@@ -29,19 +24,17 @@ struct PatientsListEmptyView: View {
         Text("Добавьте медкарту, чтобы начать работу")
       },
       actions: {
-        Button("Добавить") {
-          if let addPatientAction {
+        if let addPatientAction {
+          Button("Добавить") {
             addPatientAction()
           }
+          .buttonStyle(.glassProminent)
         }
-        .buttonStyle(.glassProminent)
       }
     )
   }
 }
 
 #Preview {
-  PatientsListEmptyView(
-    addPatientAction: { print("Patient was added") }
-  )
+  PatientsListEmptyView()
 }
