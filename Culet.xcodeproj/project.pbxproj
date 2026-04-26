@@ -46,11 +46,6 @@
 			path = CuletTests;
 			sourceTree = "<group>";
 		};
-		B76BDE132F9DF23700D37902 /* CuletUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CuletUITests;
-			sourceTree = "<group>";
-		};
 		B76BDE512F9DF70700D37902 /* CuletDraft */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = CuletDraft;
@@ -96,7 +91,6 @@
 				B76BDE742F9DFCD900D37902 /* .gitignore */,
 				B76BDDF92F9DF23500D37902 /* Culet */,
 				B76BDE092F9DF23700D37902 /* CuletTests */,
-				B76BDE132F9DF23700D37902 /* CuletUITests */,
 				B76BDE512F9DF70700D37902 /* CuletDraft */,
 				B76BDDF82F9DF23500D37902 /* Products */,
 			);
@@ -173,9 +167,6 @@
 			);
 			dependencies = (
 				B76BDE122F9DF23700D37902 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				B76BDE132F9DF23700D37902 /* CuletUITests */,
 			);
 			name = CuletUITests;
 			packageProductDependencies = (
