@@ -34,5 +34,5 @@ struct PatientsListView: View {
 
 #Preview {
   PatientsListTabView()
-    .modelContainer(PreviewContainer.container)
+    .modelContainer(PreviewContainer.emptyContainer)
 }

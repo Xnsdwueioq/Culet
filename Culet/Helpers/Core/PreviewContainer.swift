@@ -78,4 +78,18 @@ struct PreviewContainer {
       fatalError("Не удалось создать ModelContainer: \(error)")
     }
   }()
+  
+  static let emptyContainer: ModelContainer = {
+    do {
+      let schema = Schema([Patient.self, Reception.self])
+      let config = ModelConfiguration(isStoredInMemoryOnly: true)
+      let container = try ModelContainer(for: schema, configurations: config)
+      
+      let context = container.mainContext
+
+      return container
+    } catch {
+      fatalError("Не удалось создать ModelContainer: \(error)")
+    }
+  }()
 }
