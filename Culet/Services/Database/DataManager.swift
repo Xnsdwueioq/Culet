@@ -7,11 +7,6 @@
 
 import SwiftData
 
-protocol PatientStorageService: Sendable {
-  func save(patient: Patient)
-  func delete(patient: Patient)
-}
-
 final class DataManager: PatientStorageService {
   private let modelContext: ModelContext
   
