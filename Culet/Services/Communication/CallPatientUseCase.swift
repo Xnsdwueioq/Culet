@@ -20,12 +20,14 @@ final class CallPatientUseCase {
   func execute(with patient: Patient, errorManager: ErrorManageService) {
     Task {
       do {
-        guard let rawNumber = patient.phoneNumber else {
+        guard let rawNumber = patient.phoneNumber,
+        rawNumber != "" else {
           Logger.ui.error("No patient phone number")
           throw PhoneCallError.noPhoneNumber
         }
         let sanitized = rawNumber.filter { $0.isNumber || $0 == "+" }
-        guard let url = URL(string: "tel://\(sanitized)") else {
+        guard !sanitized.isEmpty,
+              let url = URL(string: "tel://\(sanitized)") else {
           Logger.ui.error("Phone number invalid format")
           throw PhoneCallError.invalidFormat
         }
