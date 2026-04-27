@@ -19,7 +19,7 @@ struct ArchivedPatientsListView: View {
   private var patients: [Patient]
   @State private var viewModel = PatientsListTabViewModel()
   
-  var isLastNameInvisible: Bool
+  var isAbbreviated: Bool
   
   private let swipesDelay = 250
   
@@ -33,27 +33,20 @@ struct ArchivedPatientsListView: View {
         List(viewModel.groupedPatients) { section in
           Section(section.period.rawValue) {
             ForEach(section.patients) { patient in
-              let phoneNumber = patient.phoneNumber
-              
               PatientListRowView(
                 patient: patient,
-                isAbbreviated: isLastNameInvisible,
+                isAbbreviated: isAbbreviated,
                 isSelected: false
               )
               
               // MARK: - Context Menu
               .contextMenu {
                 // MARK: Call Patient Button
-                Button(
-                  action: {
-                    viewModel.call(patient: patient, errorManager: errorManager)
-                  },
-                  label: {
-                    Label("Позвонить", systemImage: "phone")
-                    Text(phoneNumber ?? "")
-                  }
+                PhoneCallButton(
+                  phoneNumber: patient.phoneNumber,
+                  isAbbreviated: viewModel.isAbbreviated,
+                  action: { viewModel.call(patient: patient, errorManager: errorManager) }
                 )
-                .disabled(phoneNumber == nil)
                 
                 // MARK: Unarchive Patient Button
                 Button(

@@ -37,10 +37,9 @@ struct PatientsListView: View {
         List(viewModel.groupedPatients) { section in
           Section(section.period.rawValue) {
             ForEach(section.patients) { patient in
-              let phoneNumber = patient.phoneNumber
               PatientListRowView(
                 patient: patient,
-                isAbbreviated: viewModel.isLastNameInvisible,
+                isAbbreviated: viewModel.isAbbreviated,
                 isSelected: viewModel.isPatientSelected(patient: patient)
               )
               
@@ -60,16 +59,11 @@ struct PatientsListView: View {
               // MARK: - Context Menu
               .contextMenu {
                 // MARK: Call Patient Button
-                Button(
-                  action: {
-                    viewModel.call(patient: patient, errorManager: errorManager)
-                  },
-                  label: {
-                    Label("Позвонить", systemImage: "phone")
-                    Text(phoneNumber ?? "")
-                  }
+                PhoneCallButton(
+                  phoneNumber: patient.phoneNumber,
+                  isAbbreviated: viewModel.isAbbreviated,
+                  action: { viewModel.call(patient: patient, errorManager: errorManager) }
                 )
-                .disabled(phoneNumber == nil)
                 
                 // MARK: Archive Patient Button
                 Button(

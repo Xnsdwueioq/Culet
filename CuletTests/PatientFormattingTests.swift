@@ -65,4 +65,20 @@ struct PatientFormattingTests {
     // Assert
     #expect(result == expected, "Для даты \(year)-\(month)-\(day) ожидалось \(expected), но получили \(result)")
   }
+  
+  @Test("Тестирование маски для телефонного номера", arguments: [
+    ("", ""),
+    ("234-213", "***-***"),
+    ("avc", "avc"),
+    ("9994433000", "**********"),
+    ("123 123 123", "*** *** ***"),
+    ("+7(900)200-34-23", "+*(***)***-**-**")
+  ])
+  func getMask(_ phoneNumber: String, _ expected: String) {
+    // Act
+    let result = phoneNumber.maskedString
+    
+    // Assert
+    #expect(result == expected, "Ожидалось: \(expected), фактически: \(result)")
+  }
 }

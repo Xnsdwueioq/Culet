@@ -31,13 +31,13 @@ struct PatientsListTabView: View {
             Menu("Menu", systemImage: "ellipsis") {
               // MARK: Open Archive Button
               NavigationLink(destination: {
-                ArchivedPatientsListView(isLastNameInvisible: viewModel.isLastNameInvisible)
+                ArchivedPatientsListView(isAbbreviated: viewModel.isAbbreviated)
               }, label: {
                 Label("Архив", systemImage: "archivebox")
               })
               
               // MARK: Lastname Visibilty Toggle
-              Toggle("Скрыть фамилии", systemImage: "eye.slash", isOn: $viewModel.isLastNameInvisible)
+              Toggle("Скрыть фамилии", systemImage: "eye.slash", isOn: $viewModel.isAbbreviated)
             }
           }
         }

@@ -14,7 +14,7 @@ final class PatientsListTabViewModel {
   private let groupingService: PatientGroupingService
   private let phoneCaller: CallPatientUseCase
 
-  var isLastNameInvisible: Bool = false
+  var isAbbreviated: Bool = false
   var searchableText: String = ""
   
   var patients: [Patient] = []
