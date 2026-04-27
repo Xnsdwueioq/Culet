@@ -12,7 +12,8 @@ import SwiftData
 final class PatientsListTabViewModel {
   private let storageService: PatientStorageService
   private let groupingService: PatientGroupingService
-  
+  private let phoneCaller: CallPatientUseCase
+
   var isLastNameInvisible: Bool = false
   var searchableText: String = ""
   
@@ -38,13 +39,15 @@ final class PatientsListTabViewModel {
   
   init(
     patientStorageService: PatientStorageService = DataManager(),
-    patientGroupingService: PatientGroupingService = PatientGroupingService()
+    patientGroupingService: PatientGroupingService = PatientGroupingService(),
+    phoneCaller: CallPatientUseCase = CallPatientUseCase()
   ) {
     self.storageService = patientStorageService
     self.groupingService = patientGroupingService
+    self.phoneCaller = phoneCaller
   }
   
-  // MARK: - Patient Control
+  // MARK: - Patient Controls
   func deletePatient(patient: Patient) {
     Task {
       let delay = 250
@@ -56,12 +59,16 @@ final class PatientsListTabViewModel {
     }
   }
   
-  // MARK: - Toolbar Functions
   func addPatient() {
     //TODO: Add Patient
     addMockPatient()
   }
   
+  func call(patient: Patient, errorManager: ErrorManager) {
+    phoneCaller.execute(with: patient, errorManager: errorManager)
+  }
+  
+  // MARK: - Archive
   func toggleArchive(patient: Patient) {
     Task {
       let delay = 250
@@ -81,6 +88,6 @@ final class PatientsListTabViewModel {
       sex: .male,
       phoneNumber: "+7 (999) 123-45-67"
     )
-    storageService.delete(patient: newPatient)
+    storageService.save(patient: newPatient)
   }
 }

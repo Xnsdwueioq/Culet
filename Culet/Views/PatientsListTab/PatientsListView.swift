@@ -10,6 +10,7 @@ import SwiftData
 
 struct PatientsListView: View {
   @Environment(\.modelContext) private var modelContext
+  @Environment(ErrorManager.self) private var errorManager
   @Query(
     filter: #Predicate<Patient> { !$0.isArchived },
     sort: \Patient.creationDate,
@@ -36,7 +37,43 @@ struct PatientsListView: View {
                 isAbbreviated: viewModel.isLastNameInvisible,
                 isSelected: true
               )
-              // MARK: Swipe that Deleting Patient
+              // MARK: - Context Menu
+              .contextMenu {
+                // MARK: Call Patient Button
+                Button(
+                  action: {
+                    viewModel.call(patient: patient, errorManager: errorManager)
+                  },
+                  label: {
+                    Label("Позвонить", systemImage: "phone")
+                    Text(patient.phoneNumber ?? "")
+                  }
+                )
+                
+                // MARK: Archive Patient Button
+                Button(
+                  action: {
+                    viewModel.toggleArchive(patient: patient)
+                  },
+                  label: {
+                    Label("В архив", systemImage: "archivebox")
+                  }
+                )
+                
+                // MARK: Delete Patient Button
+                Button(
+                  role: .destructive,
+                  action: {
+                    viewModel.deletePatient(patient: patient)
+                  },
+                  label: {
+                    Label("Удалить", systemImage: "trash")
+                  }
+                )
+              }
+              
+              // MARK: - Swipe Actions
+              // MARK: Swipe that Deletes Patient
               .swipeActions(edge: .leading, allowsFullSwipe: true) {
                 Button(
                   role: .destructive,
@@ -46,7 +83,7 @@ struct PatientsListView: View {
                   label: { Image(systemName: "trash") }
                 )
               }
-              // MARK: Swipe that Opening Archive
+              // MARK: Swipe that Opens Archive
               .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                 Button(
                   role: .destructive,
@@ -76,5 +113,6 @@ struct PatientsListView: View {
 
 #Preview {
   PatientsListTabView()
-    .modelContainer(PreviewContainer.oneItemContainer)
+    .environment(ErrorManager())
+    .modelContainer(PreviewContainer.container)
 }

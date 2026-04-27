@@ -13,7 +13,7 @@ final class Patient {
   var fullName: FullName
   var birthday: Date
   var sex: Sex
-  var phoneNumber: String
+  var phoneNumber: String?
   var creationDate: Date = Date()
   var isArchived: Bool = false
   

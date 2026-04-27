@@ -39,7 +39,7 @@ struct ArchivedPatientsListView: View {
                 Button(
                   role: .destructive,
                   action: {
-                    // TODO: Delete Patient
+                    viewModel.deletePatient(patient: patient)
                   },
                   label: { Image(systemName: "trash") }
                 )
