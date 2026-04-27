@@ -56,7 +56,7 @@ struct PatientFormattingTests {
       fullName: FullName(firstName: "Test", lastName: "Test"),
       birthday: birthday,
       sex: .male,
-      mobileNumber: "Test"
+      phoneNumber: "Test"
     )
     
     // Act

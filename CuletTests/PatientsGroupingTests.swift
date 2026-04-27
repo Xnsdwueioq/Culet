@@ -40,7 +40,7 @@ struct PatientGroupingTests {
       fullName: FullName(firstName: "Test", lastName: "User"),
       birthday: Date(),
       sex: .male,
-      mobileNumber: "123",
+      phoneNumber: "123",
       creationDate: creationDate
     )
     

@@ -79,7 +79,7 @@ final class PatientsListTabViewModel {
       fullName: FullName(firstName: "Иван", lastName: "Иванов\(Int.random(in: 1..<10000))", middleName: "Иванович"),
       birthday: Date(timeIntervalSince1970: 1),
       sex: .male,
-      mobileNumber: "+7 (999) 123-45-67"
+      phoneNumber: "+7 (999) 123-45-67"
     )
     storageService.delete(patient: newPatient)
   }

@@ -55,7 +55,7 @@ struct PatientListRowView: View {
           ),
         birthday: Date().advanced(by: -60*60*24*365*30),
         sex: .male,
-        mobileNumber: "89994433220"
+        phoneNumber: "89994433220"
       ),
       isAbbreviated: false,
       isSelected: true
