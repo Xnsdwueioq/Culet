@@ -13,7 +13,14 @@ struct VisionDraftApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
+        .tint(.brand)
     }
     .modelContainer(for: [Patient.self, Reception.self])
   }
+}
+
+#Preview {
+  ContentView()
+    .tint(.brand)
+    .modelContainer(PreviewContainer.container)
 }
