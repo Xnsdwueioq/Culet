@@ -44,8 +44,3 @@ struct PatientsListTabView: View {
     }
   }
 }
-
-#Preview {
-  PatientsListTabView()
-    .modelContainer(PreviewContainer.container)
-}

@@ -37,6 +37,7 @@ struct PatientsListView: View {
         List(viewModel.groupedPatients) { section in
           Section(section.period.rawValue) {
             ForEach(section.patients) { patient in
+              let phoneNumber = patient.phoneNumber
               PatientListRowView(
                 patient: patient,
                 isAbbreviated: viewModel.isLastNameInvisible,
@@ -65,9 +66,10 @@ struct PatientsListView: View {
                   },
                   label: {
                     Label("Позвонить", systemImage: "phone")
-                    Text(patient.phoneNumber ?? "")
+                    Text(phoneNumber ?? "")
                   }
                 )
+                .disabled(phoneNumber == nil)
                 
                 // MARK: Archive Patient Button
                 Button(
