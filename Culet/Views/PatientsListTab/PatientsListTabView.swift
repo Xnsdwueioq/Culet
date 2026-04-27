@@ -24,7 +24,7 @@ struct PatientsListTabView: View {
           ToolbarItem(placement: .automatic) {
             // MARK: Add Patient Button
             Button("Добавить пациента", systemImage: "plus") {
-              viewModel.addPatient(modelContext: modelContext)
+              viewModel.addPatient()
             }
           }
           ToolbarItem(placement: .automatic) {

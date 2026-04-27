@@ -24,7 +24,7 @@ struct PatientsListView: View {
       if viewModel.patients.isEmpty {
         List {
           PatientsListEmptyView(addPatientAction: {
-            viewModel.addPatient(modelContext: modelContext)
+            viewModel.addPatient()
           })
         }
       } else {
@@ -41,7 +41,7 @@ struct PatientsListView: View {
                 Button(
                   role: .destructive,
                   action: {
-                    viewModel.deletePatient(patient: patient, modelContext: modelContext)
+                    viewModel.deletePatient(patient: patient)
                   },
                   label: { Image(systemName: "trash") }
                 )

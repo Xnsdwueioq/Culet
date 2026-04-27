@@ -15,7 +15,7 @@ struct VisionDraftApp: App {
       ContentView()
         .tint(.brand)
     }
-    .modelContainer(for: [Patient.self, Reception.self])
+    .modelContainer(AppDatabase.shared.container)
   }
 }
 

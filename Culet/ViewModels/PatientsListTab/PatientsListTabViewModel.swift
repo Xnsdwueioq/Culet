@@ -10,7 +10,8 @@ import SwiftData
 
 @Observable
 final class PatientsListTabViewModel {
-  private let patientGroupingService: PatientGroupingService
+  private let storageService: PatientStorageService
+  private let groupingService: PatientGroupingService
   
   var isLastNameInvisible: Bool = false
   var searchableText: String = ""
@@ -18,7 +19,7 @@ final class PatientsListTabViewModel {
   var patients: [Patient] = []
   var groupedPatients: [PatientsListSection] {
     guard !searchableText.isEmpty else {
-      return patientGroupingService.group(patients: patients)
+      return groupingService.group(patients: patients)
     }
     
     let query = searchableText.lowercased()
@@ -32,35 +33,39 @@ final class PatientsListTabViewModel {
       return condition
     }
     
-    return patientGroupingService.group(patients: filteredPatients)
+    return groupingService.group(patients: filteredPatients)
   }
   
-  init(patientGroupingService: PatientGroupingService = PatientGroupingService()) {
-    self.patientGroupingService = patientGroupingService
+  init(
+    patientStorageService: PatientStorageService = DataManager(),
+    patientGroupingService: PatientGroupingService = PatientGroupingService()
+  ) {
+    self.storageService = patientStorageService
+    self.groupingService = patientGroupingService
   }
   
   // MARK: - Patient Control
-  func deletePatient(patient: Patient, modelContext: ModelContext) {
+  func deletePatient(patient: Patient) {
     Task {
-      let debounce = 250
-      try? await Task.sleep(for: .milliseconds(debounce))
+      let delay = 250
+      try? await Task.sleep(for: .milliseconds(delay))
       
       await MainActor.run {
-        modelContext.delete(patient)
+        storageService.delete(patient: patient)
       }
     }
   }
   
   // MARK: - Toolbar Functions
-  func addPatient(modelContext: ModelContext) {
+  func addPatient() {
     //TODO: Add Patient
-    addMockPatient(modelContext: modelContext)
+    addMockPatient()
   }
   
   func toggleArchive(patient: Patient) {
     Task {
-      let debounce = 250
-      try? await Task.sleep(for: .milliseconds(debounce))
+      let delay = 250
+      try? await Task.sleep(for: .milliseconds(delay))
       
       await MainActor.run {
         patient.isArchived.toggle()
@@ -69,13 +74,13 @@ final class PatientsListTabViewModel {
   }
   
   // MARK: - DEBUG
-  private func addMockPatient(modelContext: ModelContext) {
+  private func addMockPatient() {
     let newPatient = Patient(
       fullName: FullName(firstName: "Иван", lastName: "Иванов\(Int.random(in: 1..<10000))", middleName: "Иванович"),
       birthday: Date(timeIntervalSince1970: 1),
       sex: .male,
       mobileNumber: "+7 (999) 123-45-67"
     )
-    modelContext.insert(newPatient)
+    storageService.delete(patient: newPatient)
   }
 }
