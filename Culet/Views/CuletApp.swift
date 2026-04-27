@@ -17,6 +17,12 @@ struct VisionDraftApp: App {
   var body: some Scene {
     WindowGroup {
       ContentView()
+        .alert(
+          errorManager.currentTitle,
+          isPresented: $errorManager.isPresented,
+          actions: { Button(role: .confirm, action: { }) },
+          message: { Text(errorManager.currentMessage) }
+        )
         .tint(.brand)
     }
     .modelContainer(AppDatabase.shared.container)
