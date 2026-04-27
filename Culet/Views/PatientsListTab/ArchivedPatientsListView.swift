@@ -73,6 +73,7 @@ struct ArchivedPatientsListView: View {
                   },
                   label: {
                     Label("Удалить", systemImage: "trash")
+                      .tint(.red)
                   }
                 )
               }
@@ -88,7 +89,10 @@ struct ArchivedPatientsListView: View {
                       viewModel.deletePatient(patient: patient)
                     }
                   },
-                  label: { Image(systemName: "trash") }
+                  label: {
+                    Image(systemName: "trash")
+                      .tint(.red)
+                  }
                 )
               }
               

@@ -95,6 +95,7 @@ struct PatientsListView: View {
                   },
                   label: {
                     Label("Удалить", systemImage: "trash")
+                      .tint(.red)
                   }
                 )
               }
@@ -114,7 +115,10 @@ struct PatientsListView: View {
                       viewModel.deletePatient(patient: patient)
                     }
                   },
-                  label: { Image(systemName: "trash") }
+                  label: {
+                    Image(systemName: "trash")
+                      .tint(.red)
+                  }
                 )
               }
               // MARK: Swipe that Opens Archive
