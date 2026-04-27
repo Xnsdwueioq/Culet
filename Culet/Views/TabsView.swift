@@ -9,10 +9,11 @@ import SwiftUI
 import SwiftData
 
 struct TabsView: View {
+  @State private var appCoordinator = AppCoordinator()
   @State private var appSession = AppSession()
   
   var body: some View {
-    TabView(selection: $appSession.selectedPatient) {
+    TabView(selection: $appCoordinator.activeTab) {
       // MARK: - Patients List Tab
       PatientsListTabView()
         .tabItem {
