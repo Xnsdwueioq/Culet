@@ -37,7 +37,7 @@ struct PatientsListTabView: View {
               })
               
               // MARK: Lastname Visibilty Toggle
-              Toggle("Скрыть фамилии", systemImage: "eye.slash", isOn: $viewModel.isAbbreviated)
+              Toggle("Скрыть фамилии", systemImage: "eye.slash", isOn: $viewModel.isAbbreviated.animation(.snappy))
             }
           }
         }

@@ -100,10 +100,10 @@ final class PatientsListTabViewModel {
   // MARK: - DEBUG
   private func addMockPatient() {
     let newPatient = Patient(
-      fullName: FullName(firstName: "Иван", lastName: "Иванов\(Int.random(in: 1..<10000))", middleName: "Иванович"),
+      fullName: FullName(firstName: "Юлия", lastName: "Бегемоточук\(Int.random(in: 1..<10000))", middleName: "Андреевна"),
       birthday: Date(timeIntervalSince1970: 1),
-      sex: .male,
-      phoneNumber: "+7 (999) 123-45-67"
+      sex: .female,
+      phoneNumber: "+7(902)956-55-62"
     )
     storageService.save(patient: newPatient)
   }
