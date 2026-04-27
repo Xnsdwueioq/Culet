@@ -47,7 +47,6 @@ struct PreviewContainer {
               fullName: FullName(firstName: "Марк", lastName: "Зомбатов"),
               birthday: Date(timeIntervalSince1970: 60*60*24*365*25),
               sex: .male,
-              phoneNumber: "2542-67-20",
               creationDate: Date().advanced(by: -60*60*24*1),
               isArchived: true
           ),
@@ -57,7 +56,6 @@ struct PreviewContainer {
               fullName: FullName(firstName: "Антон", lastName: "Улыбков", middleName: "Андреевич"),
               birthday: Date(timeIntervalSince1970: 60*60*24*365*14),
               sex: .male,
-              phoneNumber: "956-2-1-535",
               creationDate: Date().advanced(by: -60*60*24*4)
           ),
           Patient(

@@ -20,7 +20,7 @@ final class Patient {
   @Relationship(deleteRule: .cascade, inverse: \Reception.patient)
   var receptions: [Reception]? = []
   
-  init(fullName: FullName, birthday: Date, sex: Sex, phoneNumber: String, receptions: [Reception]? = nil, creationDate: Date = Date(), isArchived: Bool = false) {
+  init(fullName: FullName, birthday: Date, sex: Sex, phoneNumber: String? = nil, receptions: [Reception]? = nil, creationDate: Date = Date(), isArchived: Bool = false) {
     self.fullName = fullName
     self.birthday = birthday
     self.sex = sex
