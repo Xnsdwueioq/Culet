@@ -1,5 +1,5 @@
 //
-//  PhoneCalling.swift
+//  PhoneCallingService.swift
 //  Culet
 //
 //  Created by Eyhciurmrn Zmpodackrl on 27.04.2026.
@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol PhoneCalling: Sendable {
+protocol PhoneCallingService: Sendable {
   func call(url: URL) async throws
 }

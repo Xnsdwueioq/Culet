@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import os
 
-final class SystemPhoneCaller: PhoneCalling {
+final class SystemPhoneCaller: PhoneCallingService {
   @MainActor
   func call(url: URL) async throws {
     guard UIApplication.shared.canOpenURL(url) else {

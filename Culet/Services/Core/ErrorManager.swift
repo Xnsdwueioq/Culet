@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-final class ErrorManager {
+final class ErrorManager: ErrorManageService {
   var isPresented: Bool = false
   let currentTitle: String = "Ошибка"
   var currentMessage: String = ""

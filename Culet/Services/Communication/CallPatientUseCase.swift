@@ -9,15 +9,15 @@ import Foundation
 import os
 
 final class CallPatientUseCase {
-  private let phoneCaller: SystemPhoneCaller
+  private let phoneCaller: PhoneCallingService
   
   init(
-    phoneCaller: SystemPhoneCaller = SystemPhoneCaller()
+    phoneCaller: PhoneCallingService = SystemPhoneCaller()
   ) {
     self.phoneCaller = phoneCaller
   }
   
-  func execute(with patient: Patient, errorManager: ErrorManager) {
+  func execute(with patient: Patient, errorManager: ErrorManageService) {
     Task {
       do {
         guard let rawNumber = patient.phoneNumber else {
