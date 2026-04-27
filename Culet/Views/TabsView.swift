@@ -15,15 +15,24 @@ struct TabsView: View {
     TabView(selection: $appSession.selectedPatient) {
       // MARK: - Patients List Tab
       PatientsListTabView()
+        .tabItem {
+          Image(systemName: "person.crop.rectangle.stack")
+        }
         .tag(AppTabs.patientsList)
       
       // MARK: - Patient Info Tab
       ProgressView()
+        .tabItem {
+          Image(systemName: "person.text.rectangle")
+        }
         .tag(AppTabs.patient)
       
       // MARK: - Settings Tab
       Form {
         Text("Settings Tab")
+      }
+      .tabItem {
+        Image(systemName: "gear")
       }
       .tag(AppTabs.settings)
     }
@@ -32,5 +41,5 @@ struct TabsView: View {
 
 #Preview {
   TabsView()
-    .modelContainer(for: [Patient.self, Reception.self])
+    .modelContainer(PreviewContainer.container)
 }
