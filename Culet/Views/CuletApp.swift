@@ -12,6 +12,7 @@ import SwiftData
 struct CulletApp: App {
   @State private var errorManager = ErrorManager()
   @State private var appCoordinator = AppCoordinator()
+  @State private var userPreferences = UserPreferences()
   @State private var appSession = AppSession()
   
   var body: some Scene {
@@ -28,6 +29,7 @@ struct CulletApp: App {
     .modelContainer(AppDatabase.shared.container)
     .environment(errorManager)
     .environment(appCoordinator)
+    .environment(userPreferences)
     .environment(appSession)
   }
 }
