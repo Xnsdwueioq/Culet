@@ -8,7 +8,11 @@ struct PatientRouterView: View {
   
   var body: some View {
     ZStack {
-      MainBackgroundView(isAnimationReduced: userPreferences.reduceBackgroundAnimations)
+      if userPreferences.reduceBackgroundAnimations {
+        MainBackgroundView(isAnimationReduced: true)
+      } else {
+        MainBackgroundView()
+      }
       
       switch appSession.patientWorkspaceState {
       case .empty:

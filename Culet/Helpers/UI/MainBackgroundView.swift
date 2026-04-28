@@ -34,13 +34,12 @@ struct BackgroundPalette {
   static let accentDarkC  = Color(hue: 0.98, saturation: 0.18, brightness: 0.12)
   
   // MARK: Animation Parameters
-  
   /// Длительность одного цикла анимации (секунды).
-  static let animationCycleDuration: Double = 4.0
+  static let animationCycleDuration: Double = 4
   
   /// Диапазон смещения контрольных точек mesh при анимации.
   /// Чем больше — тем заметнее движение фона.
-  static let meshPointDrift: Float = 0.15
+  static let meshPointDrift: Float = 0.20
 }
 
 // MARK: - Main Background View
