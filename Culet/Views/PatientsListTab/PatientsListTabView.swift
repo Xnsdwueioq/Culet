@@ -10,6 +10,9 @@ import SwiftData
 
 struct PatientsListTabView: View {
   @Environment(\.modelContext) private var modelContext
+  @Environment(AppCoordinator.self) private var appCoordinator
+  @Environment(AppSession.self) private var appSession
+  
   @State private var viewModel = PatientsListTabViewModel()
   
   var body: some View {
@@ -25,6 +28,8 @@ struct PatientsListTabView: View {
             // MARK: Add Patient Button
             Button("Добавить пациента", systemImage: "plus") {
               viewModel.addPatient()
+              appSession.patientWorkspaceState = .creating
+              appCoordinator.activeTab = .patient
             }
           }
           ToolbarItem(placement: .automatic) {
@@ -43,4 +48,9 @@ struct PatientsListTabView: View {
         }
     }
   }
+}
+
+#Preview {
+  PatientsListTabView()
+    .withPreviewDependencies()
 }

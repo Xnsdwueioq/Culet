@@ -34,7 +34,5 @@ struct VisionDraftApp: App {
 
 #Preview {
   ContentView()
-    .tint(.brand)
-    .modelContainer(PreviewContainer.container)
-    .environment(ErrorManager())
+    .withPreviewDependencies()
 }

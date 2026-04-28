@@ -41,8 +41,3 @@ struct TabsView: View {
     }
   }
 }
-
-#Preview {
-  TabsView()
-    .modelContainer(PreviewContainer.container)
-}
