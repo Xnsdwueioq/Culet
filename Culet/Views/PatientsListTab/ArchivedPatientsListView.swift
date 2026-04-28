@@ -20,6 +20,8 @@ struct ArchivedPatientsListView: View {
   
   var isLastNameInvisible: Bool
   
+  private let swipesDelay = 250
+  
   var body: some View {
     Group {
       if viewModel.patients.isEmpty {
@@ -39,7 +41,10 @@ struct ArchivedPatientsListView: View {
                 Button(
                   role: .destructive,
                   action: {
-                    viewModel.deletePatient(patient: patient)
+                    Task {
+                      try? await Task.sleep(for: .milliseconds(swipesDelay))
+                      viewModel.deletePatient(patient: patient)
+                    }
                   },
                   label: { Image(systemName: "trash") }
                 )
@@ -48,7 +53,10 @@ struct ArchivedPatientsListView: View {
                 Button(
                   role: .destructive,
                   action: {
-                    viewModel.toggleArchive(patient: patient)
+                    Task {
+                      try? await Task.sleep(for: .milliseconds(swipesDelay))
+                      viewModel.toggleArchive(patient: patient)
+                    }
                   },
                   label: {
                     Image(systemName: "person.crop.rectangle.stack")
@@ -70,9 +78,4 @@ struct ArchivedPatientsListView: View {
       viewModel.patients = newPatients
     }
   }
-}
-
-#Preview {
-  ArchivedPatientsListView(isLastNameInvisible: false)
-    .modelContainer(PreviewContainer.container)
 }

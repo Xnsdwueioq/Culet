@@ -37,6 +37,8 @@ final class PatientsListTabViewModel {
     return groupingService.group(patients: filteredPatients)
   }
   
+  var selectedPatient: Patient?
+  
   init(
     patientStorageService: PatientStorageService = DataManager(),
     patientGroupingService: PatientGroupingService = PatientGroupingService(),
@@ -47,16 +49,34 @@ final class PatientsListTabViewModel {
     self.phoneCaller = phoneCaller
   }
   
+  // MARK: - Patient Selecting
+  func isPatientSelected(patient: Patient) -> Bool {
+    self.selectedPatient?.id == patient.id
+  }
+  
+  func handleTap(patient: Patient) {
+    if isPatientSelected(patient: patient) {
+      unselectPatient()
+    } else {
+      selectPatient(patient: patient)
+    }
+  }
+  
+  private func selectPatient(patient: Patient) {
+    self.selectedPatient = patient
+  }
+  
+  private func unselectPatient() {
+    self.selectedPatient = nil
+  }
+  
   // MARK: - Patient Controls
   func deletePatient(patient: Patient) {
-    Task {
-      let delay = 250
-      try? await Task.sleep(for: .milliseconds(delay))
-      
-      await MainActor.run {
-        storageService.delete(patient: patient)
-      }
+    if isPatientSelected(patient: patient) {
+      unselectPatient()
     }
+    
+    storageService.delete(patient: patient)
   }
   
   func addPatient() {
@@ -70,14 +90,11 @@ final class PatientsListTabViewModel {
   
   // MARK: - Archive
   func toggleArchive(patient: Patient) {
-    Task {
-      let delay = 250
-      try? await Task.sleep(for: .milliseconds(delay))
-      
-      await MainActor.run {
-        patient.isArchived.toggle()
-      }
+    if isPatientSelected(patient: patient) {
+      unselectPatient()
     }
+
+    patient.isArchived.toggle()
   }
   
   // MARK: - DEBUG

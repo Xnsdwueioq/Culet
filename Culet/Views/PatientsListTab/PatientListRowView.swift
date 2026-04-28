@@ -33,12 +33,12 @@ struct PatientListRowView: View {
       
       Spacer()
       
-      if isSelected {
-        Image(systemName: "checkmark")
-          .foregroundStyle(.green)
-          .fontWeight(.bold)
-          .padding(.horizontal, 10)
-      }
+      Image(systemName: "checkmark")
+        .foregroundStyle(.green)
+        .fontWeight(.bold)
+        .padding(.horizontal, 10)
+        .opacity(isSelected ? 1 : 0)
+        .scaleEffect(isSelected ? 1 : 0.5)
     }
   }
 }

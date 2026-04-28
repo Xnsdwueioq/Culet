@@ -11,6 +11,9 @@ import SwiftData
 struct PatientsListView: View {
   @Environment(\.modelContext) private var modelContext
   @Environment(ErrorManager.self) private var errorManager
+  @Environment(AppCoordinator.self) private var appCoordinator
+  @Environment(AppSession.self) private var appSession
+  
   @Query(
     filter: #Predicate<Patient> { !$0.isArchived },
     sort: \Patient.creationDate,
@@ -19,6 +22,8 @@ struct PatientsListView: View {
   private var patients: [Patient]
   
   @Bindable var viewModel: PatientsListTabViewModel
+  
+  private let swipesDelay = 250
   
   var body: some View {
     Group {
@@ -35,8 +40,22 @@ struct PatientsListView: View {
               PatientListRowView(
                 patient: patient,
                 isAbbreviated: viewModel.isLastNameInvisible,
-                isSelected: true
+                isSelected: viewModel.isPatientSelected(patient: patient)
               )
+              
+              // MARK: - On Tap Gesture
+              .contentShape(Rectangle())
+              .onTapGesture {
+                withAnimation(.snappy) {
+                  viewModel.handleTap(patient: patient)
+                  if viewModel.isPatientSelected(patient: patient) {
+                    appSession.patientWorkspaceState = .active(patient)
+                  } else {
+                    appSession.patientWorkspaceState = .empty
+                  }
+                }
+              }
+              
               // MARK: - Context Menu
               .contextMenu {
                 // MARK: Call Patient Button
@@ -53,6 +72,9 @@ struct PatientsListView: View {
                 // MARK: Archive Patient Button
                 Button(
                   action: {
+                    if viewModel.isPatientSelected(patient: patient) {
+                      appSession.patientWorkspaceState = .empty
+                    }
                     viewModel.toggleArchive(patient: patient)
                   },
                   label: {
@@ -64,6 +86,9 @@ struct PatientsListView: View {
                 Button(
                   role: .destructive,
                   action: {
+                    if viewModel.isPatientSelected(patient: patient) {
+                      appSession.patientWorkspaceState = .empty
+                    }
                     viewModel.deletePatient(patient: patient)
                   },
                   label: {
@@ -78,7 +103,14 @@ struct PatientsListView: View {
                 Button(
                   role: .destructive,
                   action: {
-                    viewModel.deletePatient(patient: patient)
+                    if viewModel.isPatientSelected(patient: patient) {
+                      appSession.patientWorkspaceState = .empty
+                    }
+                    
+                    Task {
+                      try? await Task.sleep(for: .milliseconds(swipesDelay))
+                      viewModel.deletePatient(patient: patient)
+                    }
                   },
                   label: { Image(systemName: "trash") }
                 )
@@ -88,7 +120,14 @@ struct PatientsListView: View {
                 Button(
                   role: .destructive,
                   action: {
-                    viewModel.toggleArchive(patient: patient)
+                    if viewModel.isPatientSelected(patient: patient) {
+                      appSession.patientWorkspaceState = .empty
+                    }
+                    
+                    Task {
+                      try? await Task.sleep(for: .milliseconds(swipesDelay))
+                      viewModel.toggleArchive(patient: patient)
+                    }
                   },
                   label: {
                     Image(systemName: "archivebox")
