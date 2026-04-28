@@ -18,7 +18,7 @@ extension Date {
       return .today
     case 1:
       return .yesterday
-    case 0...7:
+    case 2...7:
       return .last7Days
     case 8...30:
       return .last30Days

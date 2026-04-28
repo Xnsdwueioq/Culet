@@ -1,6 +1,6 @@
 //
 //  PatientsListView.swift
-//  VisionDraft
+//  Culet
 //
 //  Created by Eyhciurmrn Zmpodackrl on 26.04.2026.
 //

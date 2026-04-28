@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 @main
-struct VisionDraftApp: App {
+struct CulletApp: App {
   @State private var errorManager = ErrorManager()
   @State private var appCoordinator = AppCoordinator()
   @State private var appSession = AppSession()

@@ -1,6 +1,6 @@
 //
 //  TabsView.swift
-//  VisionDraft
+//  Culet
 //
 //  Created by Eyhciurmrn Zmpodackrl on 20.04.2026.
 //
