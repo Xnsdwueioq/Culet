@@ -19,7 +19,7 @@ struct PatientRouterView: View {
         EmptyPatientWorkspaceView()
       case .creating:
         // TODO: Creating Patient View
-        Text("Creating")
+        PatientCreatingView()
       case.active(let patient):
         // TODO: Patient View
         Text("Creating \(patient.creationDate)")
