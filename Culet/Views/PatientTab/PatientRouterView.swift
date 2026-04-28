@@ -7,7 +7,7 @@ struct PatientRouterView: View {
   
   var body: some View {
     ZStack {
-      Back
+      MainBackgroundView()
       
       switch appSession.patientWorkspaceState {
       case .empty:
