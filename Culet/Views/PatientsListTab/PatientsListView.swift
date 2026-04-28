@@ -114,5 +114,7 @@ struct PatientsListView: View {
 #Preview {
   PatientsListTabView()
     .environment(ErrorManager())
+    .environment(AppCoordinator())
+    .environment(AppSession())
     .modelContainer(PreviewContainer.container)
 }

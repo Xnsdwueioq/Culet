@@ -9,5 +9,5 @@ import Foundation
 
 @Observable
 final class AppSession {
-  var selectedPatient: Patient?
+  var patientWorkspaceState: PatientWorkspaceState = .empty
 }

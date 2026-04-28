@@ -9,24 +9,26 @@ import SwiftUI
 import SwiftData
 
 struct TabsView: View {
-  @State private var appCoordinator = AppCoordinator()
-  @State private var appSession = AppSession()
+  @Environment(AppCoordinator.self) var appCoordinator: AppCoordinator
+  @Environment(AppSession.self) var appSession: AppSession
   
   var body: some View {
+    @Bindable var appCoordinator = appCoordinator
+    
     TabView(selection: $appCoordinator.activeTab) {
       // MARK: - Patients List Tab
       PatientsListTabView()
         .tabItem {
           Image(systemName: "person.crop.rectangle.stack")
         }
-        .tag(AppTabs.patientsList)
+        .tag(AppTab.patientsList)
       
       // MARK: - Patient Info Tab
       ProgressView()
         .tabItem {
           Image(systemName: "person.text.rectangle")
         }
-        .tag(AppTabs.patient)
+        .tag(AppTab.patient)
       
       // MARK: - Settings Tab
       Form {
@@ -35,7 +37,7 @@ struct TabsView: View {
       .tabItem {
         Image(systemName: "gear")
       }
-      .tag(AppTabs.settings)
+      .tag(AppTab.settings)
     }
   }
 }

@@ -11,6 +11,9 @@ import SwiftData
 @main
 struct VisionDraftApp: App {
   @State private var errorManager = ErrorManager()
+  @State private var appCoordinator = AppCoordinator()
+  @State private var appSession = AppSession()
+  
   var body: some Scene {
     WindowGroup {
       ContentView()
@@ -18,6 +21,8 @@ struct VisionDraftApp: App {
     }
     .modelContainer(AppDatabase.shared.container)
     .environment(errorManager)
+    .environment(appCoordinator)
+    .environment(appSession)
   }
 }
 
