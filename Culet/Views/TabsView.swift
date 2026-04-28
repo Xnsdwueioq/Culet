@@ -10,7 +10,6 @@ import SwiftData
 
 struct TabsView: View {
   @Environment(AppCoordinator.self) var appCoordinator: AppCoordinator
-  @Environment(AppSession.self) var appSession: AppSession
   
   var body: some View {
     @Bindable var appCoordinator = appCoordinator
@@ -23,8 +22,8 @@ struct TabsView: View {
         }
         .tag(AppTab.patientsList)
       
-      // MARK: - Patient Info Tab
-      ProgressView()
+      // MARK: - Patient Managment Tab
+      PatientRouterView()
         .tabItem {
           Image(systemName: "person.text.rectangle")
         }
