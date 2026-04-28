@@ -30,13 +30,11 @@ struct TabsView: View {
         .tag(AppTab.patient)
       
       // MARK: - Settings Tab
-      Form {
-        Text("Settings Tab")
-      }
-      .tabItem {
-        Image(systemName: "gear")
-      }
-      .tag(AppTab.settings)
+      SettingsTabView()
+        .tabItem {
+          Image(systemName: "gear")
+        }
+        .tag(AppTab.settings)
     }
   }
 }
