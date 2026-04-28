@@ -4,10 +4,11 @@ import SwiftUI
 
 struct PatientRouterView: View {
   @Environment(AppSession.self) private var appSession
+  @Environment(UserPreferences.self) private var userPreferences
   
   var body: some View {
     ZStack {
-      MainBackgroundView()
+      MainBackgroundView(isAnimationReduced: userPreferences.reduceBackgroundAnimations)
       
       switch appSession.patientWorkspaceState {
       case .empty:

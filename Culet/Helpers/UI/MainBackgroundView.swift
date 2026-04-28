@@ -49,6 +49,11 @@ struct MainBackgroundView: View {
   
   /// Переключатель для запуска анимации.
   @State private var isAnimating = false
+  private var isAnimationReduced: Bool
+  
+  init(isAnimationReduced: Bool = false) {
+    self.isAnimationReduced = isAnimationReduced
+  }
   
   // MARK: - Computed Colors
   private var basePrimary: Color {
@@ -102,6 +107,7 @@ struct MainBackgroundView: View {
         .easeInOut(duration: BackgroundPalette.animationCycleDuration)
         .repeatForever(autoreverses: true)
       ) {
+        guard !isAnimationReduced else { return }
         isAnimating = true
       }
     }
