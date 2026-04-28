@@ -12,7 +12,6 @@ struct PatientRouterView: View {
       
       switch appSession.patientWorkspaceState {
       case .empty:
-        // TODO: Placeholder for Empty State
         EmptyPatientWorkspaceView()
       case .creating:
         // TODO: Creating Patient View

@@ -22,7 +22,7 @@ struct TabsView: View {
         }
         .tag(AppTab.patientsList)
       
-      // MARK: - Patient Managment Tab
+      // MARK: - Patient Tab
       PatientRouterView()
         .tabItem {
           Image(systemName: "person.text.rectangle")
