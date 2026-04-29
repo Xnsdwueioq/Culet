@@ -17,6 +17,7 @@ struct PreviewDependenciesModifier: ViewModifier {
       .environment(appCoordinator)
       .environment(userPreferences)
       .environment(appSession)
+      .tint(.brand)
   }
 }
 
