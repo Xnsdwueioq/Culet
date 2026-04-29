@@ -3,28 +3,31 @@
 import SwiftUI
 
 struct PatientFormView: View {
-  @State private var patientLastname = ""
-  @State private var patientFirstname = ""
-  @State private var patientMiddlename = ""
-  @State private var patientSex: Sex = .male
-  @State private var patientBirthday: Date = Date()
-  @State private var patientPhone = ""
+  @State private var viewModel: PatientFormViewModel
+  
+  init(patient: Patient? = nil) {
+    self._viewModel = State(initialValue: PatientFormViewModel(patient: patient))
+  }
   
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
-      PatientCreatingTitleView()
+      PatientCreatingTitleView(editMode: viewModel.editMode)
         .padding(.horizontal, 20)
         .padding(.bottom, 5)
-      PatientFullNameEnterView(patientLastname: $patientLastname, patientFirstname: $patientFirstname, patientMiddle: $patientMiddlename)
-      PatientSexEnterView(patientSex: $patientSex)
-      PatientBirthdayEnterView(patientBirthday: $patientBirthday)
+      PatientFullNameEnterView(
+        patientLastname: $viewModel.patientLastname,
+        patientFirstname: $viewModel.patientFirstname,
+        patientMiddle: $viewModel.patientMiddlename
+      )
+      PatientSexEnterView(patientSex: $viewModel.patientSex)
+      PatientBirthdayEnterView(patientBirthday: $viewModel.patientBirthday)
         .padding(.top)
-      PatientPhoneEnterView(patientPhone: $patientPhone)
+      PatientPhoneEnterView(patientPhone: $viewModel.patientPhone)
       GlassEffectContainer {
         HStack {
           Spacer()
-          PatientEnterCancelButton(action: {})
-          PatientEnterSaveButton(action: {})
+          PatientEnterCancelButton(action: {  })
+          PatientEnterSaveButton(editMode: viewModel.editMode, action: {  })
         }
         .padding(.top)
       }
@@ -39,27 +42,30 @@ struct PatientEnterCancelButton: View {
   var action: () -> Void
   
   var body: some View {
-    Button("Отмена", role: .cancel, action: {})
+    Button("Отмена", role: .cancel, action: action)
       .buttonStyle(.glass)
   }
 }
 
 struct PatientEnterSaveButton: View {
+  let editMode: Bool
   var action: () -> Void
   
   var body: some View {
-    Button("Сохранить", role: .confirm, action: {})
+    Button(editMode ? "Сохранить" : "Создать", role: .confirm, action: action)
       .buttonStyle(.glassProminent)
   }
 }
 
 struct PatientCreatingTitleView: View {
+  let editMode: Bool
+  
   var body: some View {
     HStack(spacing: 15) {
-      Image(systemName: "person.fill.badge.plus")
+      Image(systemName: editMode ? "person.fill" : "person.fill.badge.plus")
         .font(.title2)
         .symbolRenderingMode(.multicolor)
-      Text("Создание медкарты")
+      Text(editMode ? "Редактирование медкарты" : "Создание медкарты")
         .font(.title2)
         .fontWeight(.medium)
     }
@@ -135,8 +141,16 @@ struct PatientTextField: View {
 
 #Preview {
   ZStack {
-    MainBackgroundView()
+    MainBackgroundView(isAnimationReduced: true)
     PatientFormView()
+  }
+  .tint(.brand)
+}
+
+#Preview {
+  ZStack {
+    MainBackgroundView(isAnimationReduced: true)
+    PatientFormView(patient: Patient(fullName: FullName(firstName: "Uli", lastName: "Kastruli"), sex: .female))
   }
   .tint(.brand)
 }
