@@ -8,8 +8,11 @@
 import Foundation
 
 extension Patient {
-  func getAge(relativeTo now: Date = .now) -> Int {
-    let date = Calendar.current.dateComponents([.year], from: self.birthday, to: now)
+  func getAge(relativeTo now: Date = .now) -> Int? {
+    guard let birthday = self.birthday else {
+      return nil
+    }
+    let date = Calendar.current.dateComponents([.year], from: birthday, to: now)
     let age = date.year
     
     guard let age, age >= 0 else {

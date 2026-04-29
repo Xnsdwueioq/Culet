@@ -21,7 +21,7 @@ struct PatientListRowView: View {
             .fontWeight(.medium)
           
           // MARK: Patient Age
-          Text(patient.getAge().formatted())
+          Text(patient.getAge()?.formatted() ?? "")
             .foregroundStyle(.secondary)
         }
         .foregroundStyle(.primary)
