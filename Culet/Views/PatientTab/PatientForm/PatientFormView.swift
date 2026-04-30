@@ -37,7 +37,27 @@ struct PatientFormView: View {
     }
     .padding()
     .frame(maxWidth: 600)
-    
+    .alert(
+      viewModel.activeAlert?.title ?? "Внимание",
+      isPresented:
+        Binding(
+          get: { viewModel.activeAlert != nil },
+          set: { if !$0 { viewModel.activeAlert = nil } }
+        ),
+      presenting: viewModel.activeAlert,
+      actions: { alertType in
+        switch alertType {
+        case .discardChange:
+          Button("Отмена", role: .cancel, action: { })
+          Button("Продолжить", role: .destructive, action: { viewModel.cancelAction(appCoordinator: appCoordinator, appSession: appSession) })
+        case .validationError:
+          Button("Ок", role: .cancel) { }
+        }
+      },
+      message: { alertType in
+        Text(alertType.message)
+      }
+    )
   }
 }
 

@@ -49,7 +49,7 @@ struct PatientsListView: View {
                 withAnimation(.snappy) {
                   viewModel.handleTap(patient: patient)
                   if viewModel.isPatientSelected(patient: patient) {
-                    appSession.patientWorkspaceState = .active(patient)
+                    appSession.patientWorkspaceState = .viewing(patient)
                   } else {
                     appSession.patientWorkspaceState = .empty
                   }

@@ -5,6 +5,8 @@ import os
 
 @Observable
 final class PatientFormViewModel {
+  private var storageService: PatientStorageService
+  
   var patientLastname = ""
   var patientFirstname = ""
   var patientMiddlename = ""
@@ -30,7 +32,12 @@ final class PatientFormViewModel {
     selectedPatient != nil
   }
   
-  init(patient: Patient?) {
+  var activeAlert: PatientFormAlert?
+  
+  init(patient: Patient?, activeAlert: PatientFormAlert? = nil, storageService: PatientStorageService = DataManager()) {
+    self.storageService = storageService
+    self.activeAlert = activeAlert
+
     guard let patient else {
       return
     }
@@ -51,21 +58,43 @@ final class PatientFormViewModel {
         Logger.ui.error("No patient has been selected")
         return
       }
+      
       if isAllValid() {
         enterPatientData(patient: selectedPatient, errorManager: errorManager)
+        appSession.patientWorkspaceState = .viewing(selectedPatient)
       } else {
-        // TODO: Alert
+        activeAlert = .validationError
       }
     } else {
-      
+      if isAllValid() {
+        let newPatient = Patient()
+        enterPatientData(patient: newPatient, errorManager: errorManager)
+        storageService.save(patient: newPatient)
+        appSession.patientWorkspaceState = .viewing(newPatient)
+      } else {
+        activeAlert = .validationError
+      }
     }
   }
   
   func cancelButton(appCoordinator: AppCoordinator, appSession: AppSession) {
-    if editMode {
-      // TODO: Cancel Action when Edit Mode is Active
+    if !isAllEmpty() {
+      activeAlert = .discardChange
     } else {
-      // TODO: Must call the alert
+      cancelAction(appCoordinator: appCoordinator, appSession: appSession)
+    }
+  }
+  
+  func cancelAction(appCoordinator: AppCoordinator, appSession: AppSession) {
+    if editMode {
+      if let selectedPatient {
+        appSession.patientWorkspaceState = .viewing(selectedPatient)
+      } else {
+        Logger.ui.error("No patient has been selected")
+        appCoordinator.activeTab = .patientsList
+        appSession.patientWorkspaceState = .empty
+      }
+    } else {
       appCoordinator.activeTab = .patientsList
       appSession.patientWorkspaceState = .empty
     }
@@ -87,8 +116,11 @@ final class PatientFormViewModel {
     patient.sex = self.patientSex
     patient.birthday = self.patientBirthday
     patient.phoneNumber = self.patientPhone
+    
+    Logger.ui.log("Patient data has updated")
   }
   
+  /// Обрезает строку и делает валидацию
   private func checkValid(name: String) -> Bool {
     guard let trimmedText = FullName.cleanName(name: name) else {
       return false
@@ -96,7 +128,13 @@ final class PatientFormViewModel {
     return FullName.isValidName(name: trimmedText)
   }
   
-  /// Проверяет, что все поля валидны
+  /// Проверяет, что все нужные поля пустые
+  private func isAllEmpty() -> Bool {
+    let result = patientLastname.isEmpty && patientFirstname.isEmpty && patientMiddlename.isEmpty && patientPhone.isEmpty
+    return result
+  }
+  
+  /// Проверяет, что все нужные поля валидны
   private func isAllValid() -> Bool {
     let result = isPatientLastnameValid && isPatientFirstnameValid && isPatientMiddlenameValid
     return result

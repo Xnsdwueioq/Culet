@@ -20,6 +20,11 @@ final class Patient {
   @Relationship(deleteRule: .cascade, inverse: \Reception.patient)
   var receptions: [Reception]? = []
   
+  init() {
+    self.fullName = FullName(firstName: "", lastName: "")
+    self.sex = .male
+  }
+  
   init(fullName: FullName, birthday: Date? = nil, sex: Sex, phoneNumber: String? = nil, receptions: [Reception]? = nil, creationDate: Date = Date(), isArchived: Bool = false) {
     self.fullName = fullName
     self.birthday = birthday

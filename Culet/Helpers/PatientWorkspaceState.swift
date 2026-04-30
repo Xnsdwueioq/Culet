@@ -10,5 +10,6 @@ import Foundation
 enum PatientWorkspaceState {
   case empty
   case creating
-  case active(Patient)
+  case viewing(Patient)
+  case editing(Patient)
 }
