@@ -3,6 +3,7 @@
 import Foundation
 import os
 
+@Observable
 final class PatientFormViewModel {
   var patientLastname = ""
   var patientFirstname = ""
@@ -10,6 +11,19 @@ final class PatientFormViewModel {
   var patientSex: Sex = .male
   var patientBirthday: Date = Date()
   var patientPhone = ""
+  
+  var isPatientLastnameValid: Bool {
+    checkValid(name: patientLastname)
+  }
+  var isPatientFirstnameValid: Bool {
+    checkValid(name: patientFirstname)
+  }
+  var isPatientMiddlenameValid: Bool {
+    if patientMiddlename.isEmpty {
+      return true
+    }
+    return checkValid(name: patientMiddlename)
+  }
   
   var selectedPatient: Patient?
   var editMode: Bool {
@@ -31,14 +45,17 @@ final class PatientFormViewModel {
     self.selectedPatient = patient
   }
   
-  func saveButton(appCoordinator: AppCoordinator, appSession: AppSession) {
+  func saveButton(appCoordinator: AppCoordinator, appSession: AppSession, errorManager: ErrorManageService) {
     if editMode {
       guard let selectedPatient else {
         Logger.ui.error("No patient has been selected")
         return
       }
-      enterPatientData(patient: selectedPatient)
-      // TODO: Save Action when Edit Mode is Active
+      if isAllValid() {
+        enterPatientData(patient: selectedPatient, errorManager: errorManager)
+      } else {
+        // TODO: Alert
+      }
     } else {
       
     }
@@ -55,19 +72,33 @@ final class PatientFormViewModel {
   }
   
   /// Заполняет свойства `Patient` локальными данными класса
-  private func enterPatientData(patient: Patient) {
-    patient.fullName.lastName = self.patientLastname
-    patient.fullName.firstName = self.patientFirstname
-    patient.fullName.middleName = self.patientMiddlename
+  private func enterPatientData(patient: Patient, errorManager: ErrorManageService) {
+    guard let cleanFirstname = FullName.cleanName(name: patientFirstname),
+          let cleanLastName = FullName.cleanName(name: patientLastname) else {
+      Logger.ui.error("Error writing data to Patient. After trim, the string is nil.")
+      errorManager.handle(PatientFormError.nilEnteringAfterTrim)
+      return
+    }
+    let cleanMiddleName = FullName.cleanName(name: patientMiddlename)
+    
+    patient.fullName.lastName = cleanLastName
+    patient.fullName.firstName = cleanFirstname
+    patient.fullName.middleName = cleanMiddleName
     patient.sex = self.patientSex
     patient.birthday = self.patientBirthday
     patient.phoneNumber = self.patientPhone
   }
   
-  /// Валидирует полученные из контролов данные,
-  /// делает их готовыми для сохранения в модель
-  private func validateNewData() {
-    // TODO: Implement Validation Logic
-    // Maybe will be able to call alert
+  private func checkValid(name: String) -> Bool {
+    guard let trimmedText = FullName.cleanName(name: name) else {
+      return false
+    }
+    return FullName.isValidName(name: trimmedText)
+  }
+  
+  /// Проверяет, что все поля валидны
+  private func isAllValid() -> Bool {
+    let result = isPatientLastnameValid && isPatientFirstnameValid && isPatientMiddlenameValid
+    return result
   }
 }

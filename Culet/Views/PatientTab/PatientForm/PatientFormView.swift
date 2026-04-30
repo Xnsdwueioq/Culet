@@ -3,6 +3,9 @@
 import SwiftUI
 
 struct PatientFormView: View {
+  @Environment(ErrorManager.self) private var errorManager
+  @Environment(AppCoordinator.self) private var appCoordinator
+  @Environment(AppSession.self) private var appSession
   @State private var viewModel: PatientFormViewModel
   
   init(patient: Patient? = nil) {
@@ -10,31 +13,31 @@ struct PatientFormView: View {
   }
   
   var body: some View {
-    VStack(alignment: .leading, spacing: 10) {
-      PatientCreatingTitleView(editMode: viewModel.editMode)
-        .padding(.horizontal, 20)
-        .padding(.bottom, 5)
-      PatientFullNameEnterView(
-        patientLastname: $viewModel.patientLastname,
-        patientFirstname: $viewModel.patientFirstname,
-        patientMiddle: $viewModel.patientMiddlename
-      )
-      PatientSexEnterView(patientSex: $viewModel.patientSex)
-      PatientBirthdayEnterView(patientBirthday: $viewModel.patientBirthday)
-        .padding(.top)
-      PatientPhoneEnterView(patientPhone: $viewModel.patientPhone)
+    VStack(alignment: .leading, spacing: 5) {
+      VStack(alignment: .leading, spacing: 10) {
+        PatientCreatingTitleView(editMode: viewModel.editMode)
+          .padding(.horizontal, 20)
+          .padding(.bottom, 5)
+        PatientFullNameEnterView(viewModel: viewModel)
+        PatientSexEnterView(patientSex: $viewModel.patientSex)
+        PatientBirthdayEnterView(patientBirthday: $viewModel.patientBirthday)
+          .padding(.top)
+        PatientPhoneEnterView(patientPhone: $viewModel.patientPhone)
+      }
+      .shadow(color: .black.opacity(0.08), radius: 10)
+      
       GlassEffectContainer {
         HStack {
           Spacer()
-          PatientEnterCancelButton(action: {  })
-          PatientEnterSaveButton(editMode: viewModel.editMode, action: {  })
+          PatientEnterCancelButton(action: { viewModel.cancelButton(appCoordinator: appCoordinator, appSession: appSession) })
+          PatientEnterSaveButton(editMode: viewModel.editMode, action: { viewModel.saveButton(appCoordinator: appCoordinator, appSession: appSession, errorManager: errorManager) })
         }
         .padding(.top)
       }
     }
-    .shadow(color: .black.opacity(0.08), radius: 10)
     .padding()
     .frame(maxWidth: 600)
+    
   }
 }
 
@@ -76,9 +79,10 @@ struct PatientPhoneEnterView: View {
   @Binding var patientPhone: String
   
   var body: some View {
-    PatientTextField("Телефон", text: $patientPhone)
+    FormattedTextField("Телефон", text: $patientPhone)
       .padding(12)
       .glassEffect(.clear, in: .rect(cornerRadius: 25))
+      .textContentType(.telephoneNumber)
   }
 }
 
@@ -107,17 +111,20 @@ struct PatientSexEnterView: View {
 }
 
 struct PatientFullNameEnterView: View {
-  @Binding var patientLastname: String
-  @Binding var patientFirstname: String
-  @Binding var patientMiddle: String
+  @Bindable var viewModel: PatientFormViewModel
   
   var body: some View {
     VStack(alignment: .leading) {
-      PatientTextField("Фамилия", text: $patientLastname)
+      HStack {
+        PatientTextField("Фамилия", text: $viewModel.patientLastname, isValid: viewModel.isPatientLastnameValid)
+          .textContentType(.familyName)
+      }
       Divider()
-      PatientTextField("Имя", text: $patientFirstname)
+      PatientTextField("Имя", text: $viewModel.patientFirstname, isValid: viewModel.isPatientFirstnameValid)
+        .textContentType(.givenName)
       Divider()
-      PatientTextField("Отчество", text: $patientMiddle)
+      PatientTextField("Отчество", text: $viewModel.patientMiddlename, isValid: viewModel.isPatientMiddlenameValid)
+        .textContentType(.middleName)
     }
     .padding(12)
     .glassEffect(.clear, in: .rect(cornerRadius: 25))
@@ -125,6 +132,32 @@ struct PatientFullNameEnterView: View {
 }
 
 struct PatientTextField: View {
+  let title: String
+  var text: Binding<String>
+  var isValid: Bool
+  
+  init(_ title: String, text: Binding<String>, isValid: Bool = true) {
+    self.title = title
+    self.text = text
+    self.isValid = isValid
+  }
+  
+  var body: some View {
+    HStack {
+      FormattedTextField(title, text: text)
+        .autocorrectionDisabled(true)
+        .textInputAutocapitalization(.words)
+      Circle()
+        .foregroundStyle(isValid ? .clear : .brand.opacity(0.8))
+        .frame(width: 8, height: 8)
+        .padding(6)
+        .padding(.trailing, 6)
+    }
+    .animation(.snappy, value: isValid)
+  }
+}
+
+struct FormattedTextField: View {
   let title: String
   var text: Binding<String>
   
@@ -144,13 +177,15 @@ struct PatientTextField: View {
     MainBackgroundView(isAnimationReduced: true)
     PatientFormView()
   }
-  .tint(.brand)
+  .withPreviewDependencies()
 }
 
 #Preview {
   ZStack {
     MainBackgroundView(isAnimationReduced: true)
-    PatientFormView(patient: Patient(fullName: FullName(firstName: "Uli", lastName: "Kastruli"), sex: .female))
+    PatientFormView(patient:
+                      Patient(fullName: FullName(firstName: "First", lastName: "Last"), sex: .female)
+    )
   }
-  .tint(.brand)
+  .withPreviewDependencies()
 }
