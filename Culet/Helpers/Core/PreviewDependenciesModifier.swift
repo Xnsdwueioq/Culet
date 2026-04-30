@@ -7,7 +7,11 @@ struct PreviewDependenciesModifier: ViewModifier {
   @State private var modelContainer = PreviewContainer.container
   @State private var errorManager = ErrorManager()
   @State private var appCoordinator = AppCoordinator()
-  @State private var userPreferences = UserPreferences()
+  @State private var userPreferences = {
+    let userPreferences = UserPreferences()
+    userPreferences.reduceBackgroundAnimations = true
+    return userPreferences
+  }()
   @State private var appSession = AppSession()
     
   func body(content: Content) -> some View {
