@@ -27,7 +27,6 @@ struct PatientsListTabView: View {
           ToolbarItem(placement: .automatic) {
             // MARK: Add Patient Button
             Button("Добавить пациента", systemImage: "plus") {
-              viewModel.addPatient()
               appSession.patientWorkspaceState = .creating
               appCoordinator.activeTab = .patient
             }

@@ -30,7 +30,8 @@ struct PatientsListView: View {
       if viewModel.patients.isEmpty {
         List {
           PatientsListEmptyView(addPatientAction: {
-            viewModel.addPatient()
+            appSession.patientWorkspaceState = .creating
+            appCoordinator.activeTab = .patient
           })
         }
       } else {

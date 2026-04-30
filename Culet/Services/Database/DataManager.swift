@@ -6,6 +6,7 @@
 //
 
 import SwiftData
+import os
 
 final class DataManager: PatientStorageService {
   private let modelContext: ModelContext
@@ -20,5 +21,14 @@ final class DataManager: PatientStorageService {
   
   func delete(patient: Patient) {
     modelContext.delete(patient)
+  }
+  
+  func deleteAll() throws {
+    do {
+      try modelContext.delete(model: Patient.self)
+    } catch {
+      Logger.database.error("Delete all patients failed.")
+      throw DatabaseError.deleteAllError
+    }
   }
 }

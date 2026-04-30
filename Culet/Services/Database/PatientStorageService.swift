@@ -10,4 +10,5 @@ import SwiftData
 protocol PatientStorageService: Sendable {
   func save(patient: Patient)
   func delete(patient: Patient)
+  func deleteAll() throws
 }
