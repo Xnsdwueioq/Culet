@@ -96,7 +96,10 @@ final class PatientFormViewModel {
       }
     } else {
       appCoordinator.activeTab = .patientsList
-      appSession.patientWorkspaceState = .empty
+      Task {
+        try? await Task.sleep(for: .milliseconds(150))
+        appSession.patientWorkspaceState = .empty
+      }
     }
   }
   
