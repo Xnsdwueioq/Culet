@@ -39,4 +39,24 @@ extension FullName {
         return "\(lastName) \(firstName)"
       }
     }
-  }}
+  }
+}
+
+extension FullName {
+  static func isValidName(name: String) -> Bool {
+    let nameRegex = /^[\p{L}](?:[\p{L}\s\-']*[\p{L}])?$/
+    let condition = name.wholeMatch(of: nameRegex) != nil
+    
+    return condition
+  }
+}
+
+extension FullName {
+  static func cleanName(name: String) -> String? {
+    let trimmedText = name.trimmingCharacters(in: .whitespacesAndNewlines)
+    if trimmedText.isEmpty {
+      return nil
+    }
+    return trimmedText
+  }
+}

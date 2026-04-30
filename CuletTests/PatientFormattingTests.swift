@@ -81,4 +81,30 @@ struct PatientFormattingTests {
     // Assert
     #expect(result == expected, "Ожидалось: \(expected), фактически: \(result)")
   }
+  
+  @Test("Тестирование влаидации частей имени", arguments: [
+    ("Valentin", true),
+    ("Валентин", true),
+    ("Vålentƒn", true),
+    ("O'Vålentƒn", true),
+    ("Елена-светлана", true),
+    ("елена-светлана ", false),
+    ("елена-светлана 01293", false),
+    ("елена-светлана 01293", false),
+    ("-Валентин", false),
+    ("Валентин-", false),
+    ("Вал@ентин", false),
+    (" ", false),
+    ("", false),
+  ])
+  func validate(_ name: String, _ expected: Bool) {
+    // Arrange
+    
+    
+    // Act
+    let isValidate = FullName.isValidName(name: name)
+    
+    // Assert
+    #expect(isValidate == expected, "Для имени \(name) ожидалось \(expected), получено \(isValidate)")
+  }
 }
