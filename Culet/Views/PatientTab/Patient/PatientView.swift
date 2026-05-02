@@ -26,13 +26,10 @@ struct PatientView: View {
           // MARK: Patient Profile
           PatientProfileView()
             .padding()
-            .glassEffect(.clear, in: .rect(cornerRadius: 25))
         }
       }
       VStack {
-        Text("TEST")
-        Text("TEST")
-        Text("TEST")
+//        PatientNotesView()
       }
       Spacer()
     }
@@ -61,24 +58,51 @@ struct PatientView: View {
   }
 }
 
+//struct PatientNotesView: View {
+//  var body: some View {
+//    VStack {
+//      Button("Еще/Скрыть") { }
+//      
+//    }
+//  }
+//}
+
 struct PatientProfileView: View {
   var body: some View {
-    HStack(spacing: 15) {
-      Image(systemName: "person.fill")
-        .font(.title)
-      VStack(alignment: .leading, spacing: 5) {
-        PatientFullnameView()
-        HStack {
-          Text("Женщина")
-          Circle().frame(width: 3)
-          Text("20 лет")
-          Circle().frame(width: 3)
-          Text("24.07.2006")
+    VStack(alignment: .leading) {
+      HStack(spacing: 0) {
+        PatientIconView()
+          .padding(.trailing, 15)
+        VStack(alignment: .leading, spacing: 5) {
+          PatientFullnameView()
+          PatientCaptionView()
         }
-        .foregroundStyle(.secondary)
-        .font(.footnote)
+        Spacer()
       }
     }
+    .padding()
+    .glassEffect(.clear, in: .rect(cornerRadius: 25))
+  }
+}
+
+struct PatientIconView: View {
+  var body: some View {
+    Image(systemName: "person.fill")
+      .font(.title)
+  }
+}
+
+struct PatientCaptionView: View {
+  var body: some View {
+    HStack {
+      Text("Женщина")
+      Circle().frame(width: 3)
+      Text("20 лет")
+      Circle().frame(width: 3)
+      Text("24.07.2006")
+    }
+    .foregroundStyle(.secondary)
+    .font(.footnote)
   }
 }
 
