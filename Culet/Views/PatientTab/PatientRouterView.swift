@@ -20,8 +20,7 @@ struct PatientRouterView: View {
       case .creating:
         PatientFormView()
       case .viewing(let patient), .editing(let patient):
-        // TODO: Patient View
-        Text("Viewing \(patient.creationDate)")
+        PatientView(patient: patient)
       }
     }
   }
