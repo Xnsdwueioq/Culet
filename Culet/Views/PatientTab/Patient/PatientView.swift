@@ -34,29 +34,30 @@ struct PatientView: View {
         Text("TEST")
         Text("TEST")
       }
-      // MARK: - Toolbar
-      .toolbar {
-        ToolbarItem(placement: .automatic) {
-          Menu("Меню", systemImage: "ellipsis") {
-            // MARK: Edit Button
-            Button("Редактировать", systemImage: "pencil") {
-              withAnimation(.snappy) {
-                viewModel.editPatient(appSession: appSession)
-              }
-            }
-            
-            // MARK: Call Button
-            PhoneCallButton(phoneNumber: "123123123", action: {
-              viewModel.callPatient(errorManager: errorManager)
-            })
-          }
-        }
-      }
       Spacer()
     }
     // MARK: - NavigationStack Config
     .navigationTitle(Text("Пациент"))
     .navigationBarTitleDisplayMode(.inline)
+    
+    // MARK: - Toolbar
+    .toolbar {
+      ToolbarItem(placement: .automatic) {
+        Menu("Меню", systemImage: "ellipsis") {
+          // MARK: Edit Button
+          Button("Редактировать", systemImage: "pencil") {
+            withAnimation(.snappy) {
+              viewModel.editPatient(appSession: appSession)
+            }
+          }
+          
+          // MARK: Call Button
+          PhoneCallButton(phoneNumber: "123123123", action: {
+            viewModel.callPatient(errorManager: errorManager)
+          })
+        }
+      }
+    }
   }
 }
 
