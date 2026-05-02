@@ -15,32 +15,44 @@ struct PatientView: View {
   }
   
   var body: some View {
-    NavigationStack {
-      VStack(alignment: .leading) {
-        PatientFullnameView()
+    VStack(alignment: .leading) {
+      Image(systemName: "person.fill")
+        .font(.title)
+      PatientFullnameView()
+      HStack {
+        Text("Женщина")
+        Circle().frame(width: 3)
+        Text("20 лет")
+        Circle().frame(width: 3)
+        Text("24.07.2006")
       }
-      .navigationTitle(Text("Пациент"))
-      .navigationBarTitleDisplayMode(.inline)
+      .foregroundStyle(.secondary)
+      .font(.subheadline)
     }
+    .padding()
+    .glassEffect(.clear, in: .rect(cornerRadius: 25))
+    .navigationTitle(Text("Пациент"))
+    .navigationBarTitleDisplayMode(.inline)
   }
 }
 
 struct PatientFullnameView: View {
   var body: some View {
-    HStack {
-      Image(systemName: "person.fill")
-        .font(.title)
-      VStack(alignment: .leading) {
-        Text("Ковальчук")
-          .font(.title3)
-          .fontWeight(.medium)
-        Text("Юлия Бегемотовна")
-      }
+    VStack(alignment: .leading) {
+      Text("Ковальчук")
+        .font(.title3)
+        .fontWeight(.medium)
+      Text("Юлия Бегемотовна")
     }
   }
 }
 
 #Preview {
-  PatientView(patient: Patient(fullName: FullName(firstName: "Имя", lastName: "Фамилия", middleName: "Отчество"), sex: .female))
-    .withPreviewDependencies()
+  NavigationStack {
+    ZStack {
+      MainBackgroundView(isAnimationReduced: true)
+      PatientView(patient: Patient(fullName: FullName(firstName: "Имя", lastName: "Фамилия", middleName: "Отчество"), sex: .female))
+        .withPreviewDependencies()
+    }
+  }
 }
