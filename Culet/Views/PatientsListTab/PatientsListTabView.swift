@@ -22,13 +22,15 @@ struct PatientsListTabView: View {
         PatientsListView(viewModel: viewModel)
       }
         .navigationTitle(Text("Пациенты"))
+        .onAppear {
+          viewModel.onAppearPatientSelection(appSession: appSession)
+        }
       // MARK: - Toolbar
         .toolbar {
           ToolbarItem(placement: .automatic) {
             // MARK: Add Patient Button
             Button("Добавить пациента", systemImage: "plus") {
-              appSession.patientWorkspaceState = .creating
-              appCoordinator.activeTab = .patient
+              viewModel.addPatient(appSession: appSession, appCoordinator: appCoordinator)
             }
           }
           ToolbarItem(placement: .automatic) {

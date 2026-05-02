@@ -29,8 +29,16 @@ struct PatientFormView: View {
       GlassEffectContainer {
         HStack {
           Spacer()
-          PatientEnterCancelButton(action: { viewModel.cancelButton(appCoordinator: appCoordinator, appSession: appSession) })
-          PatientEnterSaveButton(editMode: viewModel.editMode, action: { viewModel.saveButton(appCoordinator: appCoordinator, appSession: appSession, errorManager: errorManager) })
+          PatientEnterCancelButton(action: {
+            withAnimation(.snappy) {
+              viewModel.cancelButton(appCoordinator: appCoordinator, appSession: appSession)
+            }
+          })
+          PatientEnterSaveButton(editMode: viewModel.editMode, action: {
+            withAnimation(.snappy) {
+              viewModel.saveButton(appCoordinator: appCoordinator, appSession: appSession, errorManager: errorManager)
+            }
+          })
         }
         .padding(.top)
       }
@@ -49,7 +57,11 @@ struct PatientFormView: View {
         switch alertType {
         case .discardChange:
           Button("Отмена", role: .cancel, action: { })
-          Button("Продолжить", role: .destructive, action: { viewModel.cancelAction(appCoordinator: appCoordinator, appSession: appSession) })
+          Button("Продолжить", role: .destructive, action: {
+            withAnimation(.snappy) {
+              viewModel.cancelAction(appCoordinator: appCoordinator, appSession: appSession)
+            }
+          })
         case .validationError:
           Button("Ок", role: .cancel) { }
         }

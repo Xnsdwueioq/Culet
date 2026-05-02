@@ -13,7 +13,7 @@ final class PatientsListTabViewModel {
   private let storageService: PatientStorageService
   private let groupingService: PatientGroupingService
   private let phoneCaller: CallPatientUseCase
-
+  
   var isAbbreviated: Bool = false
   var searchableText: String = ""
   
@@ -47,6 +47,7 @@ final class PatientsListTabViewModel {
     self.storageService = patientStorageService
     self.groupingService = patientGroupingService
     self.phoneCaller = phoneCaller
+    
   }
   
   // MARK: - Patient Selecting
@@ -59,6 +60,16 @@ final class PatientsListTabViewModel {
       unselectPatient()
     } else {
       selectPatient(patient: patient)
+    }
+  }
+  
+  func onAppearPatientSelection(appSession: AppSession) {
+    switch appSession.patientWorkspaceState {
+    case .viewing(let patient), .editing(let patient):
+      selectPatient(patient: patient)
+      
+    default:
+      selectedPatient = nil
     }
   }
   
@@ -79,9 +90,9 @@ final class PatientsListTabViewModel {
     storageService.delete(patient: patient)
   }
   
-  func addPatient() {
-    //TODO: Add Patient
-    addMockPatient()
+  func addPatient(appSession: AppSession, appCoordinator: AppCoordinator) {
+    appSession.patientWorkspaceState = .creating
+    appCoordinator.activeTab = .patient
   }
   
   func call(patient: Patient, errorManager: ErrorManageService) {
@@ -93,18 +104,7 @@ final class PatientsListTabViewModel {
     if isPatientSelected(patient: patient) {
       unselectPatient()
     }
-
+    
     patient.isArchived.toggle()
-  }
-  
-  // MARK: - DEBUG
-  private func addMockPatient() {
-    let newPatient = Patient(
-      fullName: FullName(firstName: "Юлия", lastName: "Бегемоточук\(Int.random(in: 1..<10000))", middleName: "Андреевна"),
-      birthday: Date(timeIntervalSince1970: 1),
-      sex: .female,
-      phoneNumber: "+7(902)956-55-62"
-    )
-    storageService.save(patient: newPatient)
   }
 }
