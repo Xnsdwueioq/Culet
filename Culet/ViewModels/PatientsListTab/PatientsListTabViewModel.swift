@@ -84,7 +84,7 @@ final class PatientsListTabViewModel {
     addMockPatient()
   }
   
-  func call(patient: Patient, errorManager: ErrorManager) {
+  func call(patient: Patient, errorManager: ErrorManageService) {
     phoneCaller.execute(with: patient, errorManager: errorManager)
   }
   
