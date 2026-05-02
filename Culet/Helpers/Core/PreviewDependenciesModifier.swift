@@ -12,7 +12,11 @@ struct PreviewDependenciesModifier: ViewModifier {
     userPreferences.reduceBackgroundAnimations = true
     return userPreferences
   }()
-  @State private var appSession = AppSession()
+  @State private var appSession = {
+    let appSession = AppSession()
+    appSession.patientWorkspaceState = .viewing(Patient(fullName: FullName(firstName: "First", lastName: "Last"), sex: .female))
+    return appSession
+  }()
     
   func body(content: Content) -> some View {
     content

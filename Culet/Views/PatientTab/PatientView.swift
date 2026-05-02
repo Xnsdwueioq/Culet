@@ -15,24 +15,52 @@ struct PatientView: View {
   }
   
   var body: some View {
-    VStack(alignment: .leading) {
-      Image(systemName: "person.fill")
-        .font(.title)
-      PatientFullnameView()
-      HStack {
-        Text("Женщина")
-        Circle().frame(width: 3)
-        Text("20 лет")
-        Circle().frame(width: 3)
-        Text("24.07.2006")
-      }
-      .foregroundStyle(.secondary)
-      .font(.subheadline)
+    VStack {
+      PatientProfileView()
+        .padding()
+        .glassEffect(.clear, in: .rect(cornerRadius: 25))
     }
     .padding()
-    .glassEffect(.clear, in: .rect(cornerRadius: 25))
+    
+    // MARK: - NavigationStack Config
     .navigationTitle(Text("Пациент"))
     .navigationBarTitleDisplayMode(.inline)
+    
+    // MARK: - Toolbar
+    .toolbar {
+      ToolbarItem(placement: .automatic) {
+        Menu("Меню", systemImage: "ellipsis") {
+          // MARK: Edit Button
+          Button("Редактировать", systemImage: "pencil") {
+            // TODO: Edit Action
+          }
+          
+          // MARK: Call Button
+          PhoneCallButton(phoneNumber: "123123123")
+        }
+      }
+    }
+  }
+}
+
+struct PatientProfileView: View {
+  var body: some View {
+    HStack(spacing: 15) {
+      Image(systemName: "person.fill")
+        .font(.title)
+      VStack(alignment: .leading, spacing: 5) {
+        PatientFullnameView()
+        HStack {
+          Text("Женщина")
+          Circle().frame(width: 3)
+          Text("20 лет")
+          Circle().frame(width: 3)
+          Text("24.07.2006")
+        }
+        .foregroundStyle(.secondary)
+        .font(.footnote)
+      }
+    }
   }
 }
 

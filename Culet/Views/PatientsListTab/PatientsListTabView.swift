@@ -32,7 +32,7 @@ struct PatientsListTabView: View {
             }
           }
           ToolbarItem(placement: .automatic) {
-            Menu("Menu", systemImage: "ellipsis") {
+            Menu("Меню", systemImage: "ellipsis") {
               // MARK: Open Archive Button
               NavigationLink(destination: {
                 ArchivedPatientsListView(isAbbreviated: viewModel.isAbbreviated)
