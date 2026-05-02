@@ -40,6 +40,7 @@ struct PatientListRowView: View {
         .opacity(isSelected ? 1 : 0)
         .scaleEffect(isSelected ? 1 : 0.5)
     }
+    .sensoryFeedback(.selection, trigger: isSelected)
   }
 }
 
