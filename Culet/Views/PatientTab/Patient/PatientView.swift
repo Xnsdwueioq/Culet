@@ -17,7 +17,7 @@ struct PatientView: View {
   }
   
   var body: some View {
-    VStack(alignment: .center, spacing: 15) {
+    VStack(spacing: 20) {
       VStack {
         if case .editing(let patient) = appSession.patientWorkspaceState {
           // MARK: Patient Form for Edit
@@ -25,14 +25,12 @@ struct PatientView: View {
         } else {
           // MARK: Patient Profile
           PatientProfileView()
-            .padding()
         }
       }
-      VStack {
-//        PatientNotesView()
-      }
+      PatientNotesButton()
       Spacer()
     }
+    .padding(.horizontal)
     // MARK: - NavigationStack Config
     .navigationTitle(Text("Пациент"))
     .navigationBarTitleDisplayMode(.inline)
@@ -58,14 +56,63 @@ struct PatientView: View {
   }
 }
 
-//struct PatientNotesView: View {
-//  var body: some View {
-//    VStack {
-//      Button("Еще/Скрыть") { }
-//      
-//    }
-//  }
-//}
+struct PatientNotesView: View {
+  @State private var text = ""
+  
+  var body: some View {
+    VStack {
+      TextEditor(text: $text)
+        .padding()
+        .clipShape(RoundedRectangle(cornerRadius: 25))
+        .glassEffect(.clear, in: .rect(cornerRadius: 25))
+        .padding()
+    }
+      .navigationTitle("Заметки")
+      .toolbar {
+        ToolbarItem(placement: .automatic) {
+          Button("Удалить", systemImage: "trash", role: .destructive) {
+            text = ""
+          }
+        }
+      }
+  }
+}
+
+struct PatientNotesButton: View {
+  var body: some View {
+    NavigationLink(destination: {
+      PatientNotesView()
+    }, label: {
+      PatientNotesPreview()
+        .contentShape(.rect)
+    })
+    .buttonStyle(.plain)
+  }
+}
+
+struct PatientNotesPreview: View {
+  @State private var text = ""
+  
+  var body: some View {
+    VStack(alignment: .leading) {
+      HStack {
+        Text("Заметки")
+          .font(.headline)
+        Spacer()
+        Image(systemName: "chevron.right")
+          .foregroundStyle(.secondary)
+      }
+      .padding(.bottom, 5)
+      
+      if !text.isEmpty {
+        Text(text)
+          .lineLimit(5)
+      }
+    }
+    .padding()
+    .glassEffect(.clear, in: .rect(cornerRadius: 25))
+  }
+}
 
 struct PatientProfileView: View {
   var body: some View {
