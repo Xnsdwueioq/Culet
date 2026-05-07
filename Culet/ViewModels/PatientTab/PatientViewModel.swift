@@ -8,6 +8,12 @@ final class PatientViewModel {
   
   var patient: Patient
   
+  // MARK: - Patient Name
+  var fullName: FullName { patient.fullName }
+  var firstName: String { fullName.firstName }
+  var lastName: String { fullName.lastName }
+  var middleName: String? { fullName.middleName }
+  
   init(patient: Patient, phoneCaller: CallPatientUseCase = CallPatientUseCase()) {
     self.patient = patient
     self.phoneCaller = phoneCaller

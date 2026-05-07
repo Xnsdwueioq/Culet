@@ -24,7 +24,7 @@ struct PatientView: View {
           PatientFormView(patient: patient)
         } else {
           // MARK: Patient Profile
-          PatientProfileView()
+          PatientProfileView(viewModel: viewModel)
         }
       }
       PatientNotesButton()
@@ -112,30 +112,9 @@ struct PatientNotesPreview: View {
   }
 }
 
-struct PatientProfileView: View {
-  var body: some View {
-    VStack(alignment: .leading) {
-      HStack(spacing: 0) {
-        PatientIconView()
-          .padding(.trailing, 15)
-        VStack(alignment: .leading, spacing: 5) {
-          PatientFullnameView()
-          PatientCaptionView()
-        }
-        Spacer()
-      }
-    }
-    .padding()
-    .glassEffect(.clear, in: .rect(cornerRadius: 25))
-  }
-}
 
-struct PatientIconView: View {
-  var body: some View {
-    Image(systemName: "person.fill")
-      .font(.title)
-  }
-}
+
+
 
 struct PatientCaptionView: View {
   var body: some View {
@@ -151,22 +130,13 @@ struct PatientCaptionView: View {
   }
 }
 
-struct PatientFullnameView: View {
-  var body: some View {
-    VStack(alignment: .leading) {
-      Text("Ковальчук")
-        .font(.title3)
-        .fontWeight(.medium)
-      Text("Юлия Бегемотовна")
-    }
-  }
-}
+
 
 #Preview {
   NavigationStack {
     ZStack {
       MainBackgroundView(isAnimationReduced: true)
-      PatientView(patient: Patient(fullName: FullName(firstName: "Имя", lastName: "Фамилия", middleName: "Отчество"), sex: .female))
+      PatientView(patient: Patient(fullName: FullName(firstName: "Имя", lastName: "Фамилия"), sex: .female))
         .withPreviewDependencies()
     }
   }
