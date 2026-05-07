@@ -43,7 +43,6 @@ struct PatientFormView: View {
         .padding(.top)
       }
     }
-    .padding()
     .frame(maxWidth: 600)
     .alert(
       viewModel.activeAlert?.title ?? "Внимание",

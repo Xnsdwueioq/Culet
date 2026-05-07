@@ -64,8 +64,6 @@ struct PatientNotesView: View {
       TextEditor(text: $text)
         .padding()
         .clipShape(RoundedRectangle(cornerRadius: 25))
-        .glassEffect(.clear, in: .rect(cornerRadius: 25))
-        .padding()
     }
       .navigationTitle("Заметки")
       .toolbar {

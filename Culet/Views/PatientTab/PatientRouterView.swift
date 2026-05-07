@@ -20,6 +20,7 @@ struct PatientRouterView: View {
           EmptyPatientWorkspaceView()
         case .creating:
           PatientFormView()
+            .padding()
         case .viewing(let patient), .editing(let patient):
           PatientView(patient: patient)
         }
