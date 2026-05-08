@@ -16,6 +16,7 @@ final class Patient {
   var phoneNumber: String?
   var creationDate: Date = Date()
   var isArchived: Bool = false
+  var notes: String = ""
   
   @Relationship(deleteRule: .cascade, inverse: \Reception.patient)
   var receptions: [Reception]? = []
@@ -25,7 +26,16 @@ final class Patient {
     self.sex = .male
   }
   
-  init(fullName: FullName, birthday: Date? = nil, sex: Sex, phoneNumber: String? = nil, receptions: [Reception]? = nil, creationDate: Date = Date(), isArchived: Bool = false) {
+  init(
+    fullName: FullName,
+    birthday: Date? = nil,
+    sex: Sex,
+    phoneNumber: String? = nil,
+    receptions: [Reception]? = nil,
+    creationDate: Date = Date(),
+    isArchived: Bool = false,
+    notes: String = ""
+  ) {
     self.fullName = fullName
     self.birthday = birthday
     self.sex = sex
@@ -33,5 +43,6 @@ final class Patient {
     self.creationDate = creationDate
     self.receptions = receptions
     self.isArchived = isArchived
+    self.notes = notes
   }
 }
