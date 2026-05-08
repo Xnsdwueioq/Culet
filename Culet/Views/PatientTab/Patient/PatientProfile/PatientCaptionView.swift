@@ -1,11 +1,21 @@
+//
+
+import SwiftUI
+
 struct PatientCaptionView: View {
+  let sex: String
+  let birthday: String?
+  let age: String?
+  
   var body: some View {
     HStack {
-      Text("Женщина")
-      Circle().frame(width: 3)
-      Text("20 лет")
-      Circle().frame(width: 3)
-      Text("24.07.2006")
+      Text(sex)
+      if let birthday, let age {
+        Circle().frame(width: 3)
+        Text(age)
+        Circle().frame(width: 3)
+        Text(birthday)
+      }
     }
     .foregroundStyle(.secondary)
     .font(.footnote)

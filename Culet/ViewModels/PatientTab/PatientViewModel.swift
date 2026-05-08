@@ -8,11 +8,19 @@ final class PatientViewModel {
   
   var patient: Patient
   
-  // MARK: - Patient Name
+  // MARK: - Patient Data
   var fullName: FullName { patient.fullName }
   var firstName: String { fullName.firstName }
   var lastName: String { fullName.lastName }
   var middleName: String? { fullName.middleName }
+  var sex: String {
+    switch patient.sex {
+    case .male: "Мужчина"
+    case .female: "Женщина"
+    }
+  }
+  var birthday: String? { patient.birthday?.formatted(date: .numeric, time: .omitted) }
+  var age: String? { patient.getAge()?.yearsString }
   
   init(patient: Patient, phoneCaller: CallPatientUseCase = CallPatientUseCase()) {
     self.patient = patient

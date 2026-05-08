@@ -16,7 +16,11 @@ struct PatientProfileView: View {
             lastname: viewModel.lastName,
             middleName: viewModel.middleName
           )
-          PatientCaptionView()
+          PatientCaptionView(
+            sex: viewModel.sex,
+            birthday: viewModel.birthday,
+            age: viewModel.age
+          )
         }
         Spacer()
       }
