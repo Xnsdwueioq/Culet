@@ -95,8 +95,8 @@ final class PatientsListTabViewModel {
     appCoordinator.activeTab = .patient
   }
   
-  func call(patient: Patient, errorManager: ErrorManageService) {
-    phoneCaller.execute(with: patient, errorManager: errorManager)
+  func call(patient: Patient, errorManager: ErrorManageService) async {
+    await phoneCaller.execute(with: patient, errorManager: errorManager)
   }
   
   // MARK: - Archive

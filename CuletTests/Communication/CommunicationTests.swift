@@ -35,9 +35,7 @@ struct CommunicationTests {
     
     // Act
     await sup.execute(with: patient, errorManager: mockErrorManager)
-    
-    try? await Task.sleep(for: .milliseconds(15))
-    
+        
     let result = mockErrorManager.handledError
     
     // Assert

@@ -98,13 +98,28 @@ struct PatientFormattingTests {
     ("", false),
   ])
   func validate(_ name: String, _ expected: Bool) {
-    // Arrange
-    
-    
     // Act
     let isValidate = FullName.isValidName(name: name)
     
     // Assert
     #expect(isValidate == expected, "Для имени \(name) ожидалось \(expected), получено \(isValidate)")
   }
+}
+
+@Test("Тестирование форматирования возвраста", arguments: [
+  (1, "1 год"),
+  (2, "2 года"),
+  (5, "5 лет"),
+  (14, "14 лет"),
+  (21, "21 год"),
+  (22, "22 года"),
+  (25, "25 лет"),
+  (0, "0 лет"),
+])
+func getStingAge(_ years: Int, _ expected: String) {
+  // Act
+  let result = years.yearsString
+  
+  // Assert
+  #expect(result == expected, "Получено '\(result)', ожидалось \(expected)")
 }

@@ -45,7 +45,11 @@ struct ArchivedPatientsListView: View {
                 PhoneCallButton(
                   phoneNumber: patient.phoneNumber,
                   isAbbreviated: viewModel.isAbbreviated,
-                  action: { viewModel.call(patient: patient, errorManager: errorManager) }
+                  action: {
+                    Task {
+                      await viewModel.call(patient: patient, errorManager: errorManager)
+                    }
+                  }
                 )
                 
                 // MARK: Unarchive Patient Button

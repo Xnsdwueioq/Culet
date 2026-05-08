@@ -25,7 +25,7 @@ final class PatientViewModel {
     appSession.patientWorkspaceState = .editing(patient)
   }
   
-  func callPatient(errorManager: ErrorManageService) {
-    phoneCaller.execute(with: patient, errorManager: errorManager)
+  func callPatient(errorManager: ErrorManageService) async {
+    await phoneCaller.execute(with: patient, errorManager: errorManager)
   }
 }
