@@ -51,7 +51,7 @@ struct PatientView: View {
           }
           
           // MARK: Call Button
-          PhoneCallButton(phoneNumber: "123123123", action: {
+          PhoneCallButton(phoneNumber: viewModel.phoneNumber, action: {
             Task {
               await viewModel.callPatient(errorManager: errorManager)
             }

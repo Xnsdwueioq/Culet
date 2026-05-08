@@ -21,6 +21,7 @@ final class PatientViewModel {
   }
   var birthday: String? { patient.birthday?.formatted(date: .numeric, time: .omitted) }
   var age: String? { patient.getAge()?.yearsString }
+  var phoneNumber: String? { patient.phoneNumber }
   var notes: String { patient.notes }
   
   init(patient: Patient, phoneCaller: CallPatientUseCase = CallPatientUseCase()) {
