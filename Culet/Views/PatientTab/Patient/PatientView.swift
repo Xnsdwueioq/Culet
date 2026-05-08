@@ -27,7 +27,11 @@ struct PatientView: View {
           PatientProfileView(viewModel: viewModel)
         }
       }
-      PatientNotesButton()
+      
+      // MARK: Patient Notes
+      PatientNotesButton(notes: $viewModel.patient.notes)
+      
+      
       Spacer()
     }
     .padding(.horizontal)
@@ -57,63 +61,6 @@ struct PatientView: View {
     }
   }
 }
-
-struct PatientNotesView: View {
-  @State private var text = ""
-  
-  var body: some View {
-    VStack {
-      TextEditor(text: $text)
-        .padding()
-        .clipShape(RoundedRectangle(cornerRadius: 25))
-    }
-      .navigationTitle("Заметки")
-      .toolbar {
-        ToolbarItem(placement: .automatic) {
-          Button("Удалить", systemImage: "trash", role: .destructive) {
-            text = ""
-          }
-        }
-      }
-  }
-}
-
-struct PatientNotesButton: View {
-  var body: some View {
-    NavigationLink(destination: {
-      PatientNotesView()
-    }, label: {
-      PatientNotesPreview()
-        .contentShape(.rect)
-    })
-    .buttonStyle(.plain)
-  }
-}
-
-struct PatientNotesPreview: View {
-  @State private var text = ""
-  
-  var body: some View {
-    VStack(alignment: .leading) {
-      HStack {
-        Text("Заметки")
-          .font(.headline)
-        Spacer()
-        Image(systemName: "chevron.right")
-          .foregroundStyle(.secondary)
-      }
-      .padding(.bottom, 5)
-      
-      if !text.isEmpty {
-        Text(text)
-          .lineLimit(5)
-      }
-    }
-    .padding()
-    .glassEffect(.clear, in: .rect(cornerRadius: 25))
-  }
-}
-
 
 #Preview {
   NavigationStack {
