@@ -22,6 +22,7 @@ struct PatientView: View {
         if case .editing(let patient) = appSession.patientWorkspaceState {
           // MARK: Patient Form for Edit
           PatientFormView(patient: patient)
+            .padding(.bottom, 25)
         } else {
           // MARK: Patient Profile
           PatientProfileView(viewModel: viewModel)
@@ -30,7 +31,6 @@ struct PatientView: View {
       
       // MARK: Patient Notes
       PatientNotesButton(notes: $viewModel.patient.notes)
-      
       
       Spacer()
     }
