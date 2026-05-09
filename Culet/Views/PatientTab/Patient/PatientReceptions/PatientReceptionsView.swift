@@ -6,23 +6,14 @@ struct PatientReceptionsView: View {
   @Binding var viewModel: PatientViewModel
   
   var body: some View {
-    ForEach(viewModel.receptions) { reception in
-      ReceptionView(reception: reception)
+    VStack {
+      ForEach(viewModel.receptions) { reception in
+        ReceptionView(reception: reception)
+      }
+      MedcardCreatedView(creationDate: viewModel.creationDate)
     }
   }
 }
-
-struct ReceptionView: View {
-  var reception: ReceptionMetric
-  
-  var body: some View {
-    HStack {
-      Image(systemName: reception.icon)
-      Text(reception.displayName)
-    }
-  }
-}
-
 
 #Preview {
   PatientReceptionsView(
@@ -33,13 +24,17 @@ struct ReceptionView: View {
               Patient(
                 fullName:
                   FullName(
-                    firstName: "123",
-                    lastName: "123"),
+                    firstName: "Имя",
+                    lastName: "Фамилия"),
                 sex: .male,
                 receptions: [
                   Reception(
-                    notes: "1 rec!!",
-                    bodyProportionMetrics: [BodyProportionMetric(measuredAt: Date()), BodyProportionMetric(measuredAt: Date())]
+                    date: Calendar.current.date(byAdding: .day, value: -30, to: .now)!,
+                    notes: "Первичная диагностика. Замер базовых метрик."
+                  ),
+                  Reception(
+                    date: Calendar.current.date(byAdding: .day, value: -2, to: .now)!,
+                    notes: "Повторный прием после курса упражнений."
                   )
                 ]
               )

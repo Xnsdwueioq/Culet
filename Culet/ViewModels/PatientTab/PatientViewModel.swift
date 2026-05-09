@@ -1,6 +1,7 @@
 //
 
 import Foundation
+import SwiftData
 
 @Observable
 final class PatientViewModel {
@@ -8,16 +9,25 @@ final class PatientViewModel {
   
   var patient: Patient
   
-  var receptions: [ReceptionMetric] {
+  var receptions: [ReceptionsListSection] {
     guard let receptions = patient.receptions else {
       return []
     }
     
-    return receptions.flatMap { reception in
-      reception.bodyProportionMetrics.map { .bodyProportion($0) }
-    }
+    return receptions
+      .sorted { $0.date > $1.date }
+      .compactMap { reception in
+        let metrics: [ReceptionMetric] = reception.bodyProportionMetrics.map { .bodyProportion($0) }
+        let lastDate = reception.bodyProportionMetrics.max(by: { $0.measuredAt > $1.measuredAt })?.measuredAt
+        return ReceptionsListSection(
+          id: reception.id,
+          date: lastDate ?? reception.date,
+          metrics: metrics,
+          notes: reception.notes
+        )
+      }
   }
-    
+  
   // MARK: - Patient Profile Info
   var fullName: FullName { patient.fullName }
   var firstName: String { fullName.firstName }
@@ -33,6 +43,7 @@ final class PatientViewModel {
   var age: String? { patient.getAge()?.yearsString }
   var phoneNumber: String? { patient.phoneNumber }
   var notes: String { patient.notes }
+  var creationDate: String { patient.creationDate.formatted(date: .numeric, time: .shortened) }
   
   init(patient: Patient, phoneCaller: CallPatientUseCase = CallPatientUseCase()) {
     self.patient = patient

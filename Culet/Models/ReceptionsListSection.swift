@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import SwiftData
 
 struct ReceptionsListSection: Identifiable {
+  var id: PersistentIdentifier
   var date: Date
   var metrics: [ReceptionMetric]
-  
-  var id = UUID()
+  var notes: String
 }
