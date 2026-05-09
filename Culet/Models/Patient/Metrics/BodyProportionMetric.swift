@@ -9,9 +9,7 @@ final class BodyProportionMetric: Metric {
   var reception: Reception?
   
   // METRICS
-  
-  var displayName: String { "Измерение пропорций тела" }
-  
+    
   init(measuredAt: Date, reception: Reception? = nil) {
     self.measuredAt = measuredAt
     self.reception = reception
