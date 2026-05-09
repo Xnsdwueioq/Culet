@@ -17,9 +17,10 @@ final class Reception {
   @Relationship(deleteRule: .cascade)
   var bodyProportionMetrics: [BodyProportionMetric] = []
   
-  init(date: Date = .now, notes: String = "") {
+  init(date: Date = .now, notes: String = "", bodyProportionMetrics: [BodyProportionMetric] = []) {
     self.date = date
     self.notes = notes
+    self.bodyProportionMetrics = bodyProportionMetrics
   }
 }
 
