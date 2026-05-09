@@ -29,7 +29,6 @@ final class PatientViewModel {
     self.phoneCaller = phoneCaller
   }
   
-  
   // MARK: - Toolbar Actions
   func editPatient(appSession: AppSession) {
     appSession.patientWorkspaceState = .editing(patient)

@@ -12,13 +12,14 @@ import SwiftData
 final class Reception {
   var date: Date
   var notes: String
-  
-  // For future measurements
-  
   var patient: Patient?
+  
+  @Relationship(deleteRule: .cascade)
+  var bodyProportionMetrics: [BodyProportionMetric] = []
   
   init(date: Date = .now, notes: String = "") {
     self.date = date
     self.notes = notes
   }
 }
+
