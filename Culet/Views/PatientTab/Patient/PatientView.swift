@@ -32,6 +32,8 @@ struct PatientView: View {
       // MARK: Patient Notes
       PatientNotesButton(notes: $viewModel.patient.notes)
       
+      PatientReceptionsView(viewModel: $viewModel)
+      
       Spacer()
     }
     .padding(.horizontal)

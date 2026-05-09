@@ -8,7 +8,17 @@ final class PatientViewModel {
   
   var patient: Patient
   
-  // MARK: - Patient Data
+  var receptions: [ReceptionMetric] {
+    guard let receptions = patient.receptions else {
+      return []
+    }
+    
+    return receptions.flatMap { reception in
+      reception.bodyProportionMetrics.map { .bodyProportion($0) }
+    }
+  }
+    
+  // MARK: - Patient Profile Info
   var fullName: FullName { patient.fullName }
   var firstName: String { fullName.firstName }
   var lastName: String { fullName.lastName }
