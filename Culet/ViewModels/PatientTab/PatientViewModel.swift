@@ -10,23 +10,8 @@ final class PatientViewModel {
   var patient: Patient
   
   // MARK: - Receptions & Metrics Logic
-  var receptions: [ReceptionsListSection] {
-    guard let receptions = patient.receptions else {
-      return []
-    }
-    
-    return receptions
-      .sorted { $0.date > $1.date }
-      .compactMap { reception in
-        let metrics: [ReceptionMetric] = reception.bodyProportionMetrics.map { .bodyProportion($0) }
-        let lastDate = reception.bodyProportionMetrics.max(by: { $0.measuredAt > $1.measuredAt })?.measuredAt
-        return ReceptionsListSection(
-          id: reception.id,
-          date: lastDate ?? reception.date,
-          metrics: metrics,
-          notes: reception.notes
-        )
-      }
+  var receptions: [Reception] {
+    (patient.receptions ?? []).sorted { $0.date > $1.date }
   }
   
   var metricWorkspaceState = MetricWorkspaceState.empty

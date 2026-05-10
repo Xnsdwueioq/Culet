@@ -23,4 +23,3 @@ final class Reception {
     self.bodyProportionMetrics = bodyProportionMetrics
   }
 }
-

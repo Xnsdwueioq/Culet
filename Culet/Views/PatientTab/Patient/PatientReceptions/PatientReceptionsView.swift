@@ -7,9 +7,12 @@ struct PatientReceptionsView: View {
   
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
+      // MARK: Receptions List
       ForEach(viewModel.receptions) { reception in
         ReceptionView(viewModel: viewModel, reception: reception)
       }
+      
+      // MARK: Medcard Created Notification
       MedcardCreatedView(creationDate: viewModel.creationDate)
     }
   }

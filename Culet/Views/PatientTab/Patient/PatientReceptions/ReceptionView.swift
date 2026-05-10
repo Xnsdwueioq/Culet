@@ -9,13 +9,13 @@ import SwiftUI
 
 struct ReceptionView: View {
   var viewModel: PatientViewModel
-  var reception: ReceptionsListSection
+  var reception: Reception
   
   var body: some View {
     VStack(spacing: 5) {
       // MARK: - Last Metric Date
       HStack {
-        Text(reception.date.formatted(date: .numeric, time: .shortened))
+        Text(reception.displayDate.formatted(date: .numeric, time: .shortened))
           .bold()
           .foregroundStyle(.secondary)
         Spacer()
@@ -27,7 +27,7 @@ struct ReceptionView: View {
         // MARK: Metrics List
         ScrollView(.horizontal) {
           HStack {
-            ForEach(reception.metrics) { metric in
+            ForEach(reception.receptionMetrics) { metric in
               Button(action: { viewModel.selectMetric(metric) } ) {
                 MetricPreview(metric: metric)
               }
@@ -48,6 +48,22 @@ struct ReceptionView: View {
         }
       }
       .glassEffect(.clear, in: .rect(cornerRadius: 25))
+      
+      // MARK: - Context Menu
+      .contentShape(.rect)
+      .contextMenu {
+        NavigationLink(destination: {
+          NotesView(notes: Binding(
+            get: {
+              reception.notes
+            }, set: {
+              reception.notes = $0
+            }
+          ))
+        }) {
+          Label("Заметки", systemImage: "pencil")
+        }
+      }
     }
   }
 }

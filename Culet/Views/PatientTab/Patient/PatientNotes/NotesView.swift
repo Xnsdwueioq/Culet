@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-struct PatientNotesView: View {
+struct NotesView: View {
   @FocusState private var isFocused: Bool
   
   @Binding var notes: String
