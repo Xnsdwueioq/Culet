@@ -17,28 +17,6 @@ struct PatientReceptionsView: View {
 
 #Preview {
   PatientReceptionsView(
-    viewModel:
-        .constant(
-          PatientViewModel(
-            patient:
-              Patient(
-                fullName:
-                  FullName(
-                    firstName: "Имя",
-                    lastName: "Фамилия"),
-                sex: .male,
-                receptions: [
-                  Reception(
-                    date: Calendar.current.date(byAdding: .day, value: -30, to: .now)!,
-                    notes: "Первичная диагностика. Замер базовых метрик."
-                  ),
-                  Reception(
-                    date: Calendar.current.date(byAdding: .day, value: -2, to: .now)!,
-                    notes: "Повторный прием после курса упражнений."
-                  )
-                ]
-              )
-          )
-        )
+    viewModel: .constant(PatientViewModel(patient: PreviewDependenciesModifier.testPatient))
   )
 }

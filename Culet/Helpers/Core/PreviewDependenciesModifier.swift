@@ -14,10 +14,10 @@ struct PreviewDependenciesModifier: ViewModifier {
   }()
   @State private var appSession = {
     let appSession = AppSession()
-    appSession.patientWorkspaceState = .viewing(Patient(fullName: FullName(firstName: "First", lastName: "Last"), sex: .female))
+    appSession.patientWorkspaceState = .viewing(PreviewDependenciesModifier.testPatient)
     return appSession
   }()
-    
+  
   func body(content: Content) -> some View {
     content
       .modelContainer(modelContainer)
@@ -26,6 +26,34 @@ struct PreviewDependenciesModifier: ViewModifier {
       .environment(userPreferences)
       .environment(appSession)
       .tint(.brand)
+  }
+}
+
+extension PreviewDependenciesModifier {
+  /// Returns test `Patient` instance
+  static var testPatient: Patient {
+    let danil = Patient(
+      fullName: FullName(firstName: "Данил", lastName: "Самкраскин", middleName: "Федорович"),
+      birthday: Date(timeIntervalSince1970: 60*60*24*365*46),
+      sex: .male,
+      phoneNumber: "123-123-234",
+      creationDate: Date().advanced(by: -60*60*24*80)
+    )
+    let rec1 = Reception(
+      date: Calendar.current.date(byAdding: .day, value: -30, to: .now)!,
+      notes: "Первичная диагностика. Замер базовых метрик."
+    )
+    rec1.patient = danil
+    rec1.bodyProportionMetrics.append(BodyProportionMetric(measuredAt: rec1.date))
+    
+    let rec2 = Reception(
+      date: Calendar.current.date(byAdding: .day, value: -2, to: .now)!,
+      notes: "Повторный прием после курса упражнений."
+    )
+    rec2.patient = danil
+    rec2.bodyProportionMetrics.append(BodyProportionMetric(measuredAt: rec2.date))
+    
+    return danil
   }
 }
 

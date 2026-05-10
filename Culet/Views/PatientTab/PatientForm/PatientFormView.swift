@@ -83,9 +83,7 @@ struct PatientFormView: View {
 #Preview {
   ZStack {
     MainBackgroundView(isAnimationReduced: true)
-    PatientFormView(patient:
-                      Patient(fullName: FullName(firstName: "First", lastName: "Last"), sex: .female)
-    )
+    PatientFormView(patient: PreviewDependenciesModifier.testPatient)
   }
   .withPreviewDependencies()
 }

@@ -69,7 +69,7 @@ struct PatientView: View {
   NavigationStack {
     ZStack {
       MainBackgroundView(isAnimationReduced: true)
-      PatientView(patient: Patient(fullName: FullName(firstName: "Имя", lastName: "Фамилия"), sex: .female))
+      PatientView(patient: PreviewDependenciesModifier.testPatient)
         .withPreviewDependencies()
     }
   }

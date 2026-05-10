@@ -47,17 +47,7 @@ struct PatientListRowView: View {
 #Preview {
   List {
     PatientListRowView(
-      patient: Patient(
-        fullName:
-          FullName(
-            firstName: "Марк",
-            lastName: "Валентинов",
-            middleName: "Антонович"
-          ),
-        birthday: Date().advanced(by: -60*60*24*365*30),
-        sex: .male,
-        phoneNumber: "89994433220"
-      ),
+      patient: PreviewDependenciesModifier.testPatient,
       isAbbreviated: false,
       isSelected: true
     )
