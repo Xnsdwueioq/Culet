@@ -14,5 +14,5 @@ struct MetricDetailView: View {
 }
 
 #Preview {
-  MetricDetailView(metric: ReceptionMetric.bodyProportion(BodyProportionMetric(measuredAt: Date())))
+  MetricDetailView(metric: ReceptionMetric.bodyProportion(BodyProportionMetric()))
 }

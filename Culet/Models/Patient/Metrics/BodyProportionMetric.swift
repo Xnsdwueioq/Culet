@@ -10,7 +10,7 @@ final class BodyProportionMetric: MetricProtocol {
   
   // Measurements
     
-  init(measuredAt: Date, reception: Reception? = nil) {
+  init(measuredAt: Date = Date(), reception: Reception? = nil) {
     self.measuredAt = measuredAt
     self.reception = reception
   }
