@@ -41,7 +41,7 @@ struct ReceptionView: View {
           Divider()
           
           // MARK: Notes
-          Text(reception.notes)
+          NotesPreview(notes: reception.notes)
             .foregroundStyle(.secondary)
             .padding()
         }

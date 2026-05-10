@@ -3,7 +3,7 @@
 import SwiftUI
 
 struct PatientNotesPreview: View {
-  @Binding var notes: String
+  var notes: String
   
   var body: some View {
     VStack(alignment: .leading) {
@@ -17,10 +17,7 @@ struct PatientNotesPreview: View {
       .padding(.bottom, 5)
       
       // MARK: - Preview Text of the Notes
-      if !notes.isEmpty {
-        Text(notes)
-          .lineLimit(5)
-      }
+      NotesPreview(notes: notes)
     }
     .padding()
     .glassEffect(.clear, in: .rect(cornerRadius: 25))

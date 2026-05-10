@@ -31,10 +31,3 @@ struct MedcardCreatedView: View {
     }
   }
 }
-
-#Preview {
-  ZStack {
-    MainBackgroundView(isAnimationReduced: true)
-    
-  }
-}

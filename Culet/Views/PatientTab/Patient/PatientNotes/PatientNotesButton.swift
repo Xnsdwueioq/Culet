@@ -9,7 +9,7 @@ struct PatientNotesButton: View {
     NavigationLink(destination: {
       PatientNotesView(notes: $notes)
     }, label: {
-      PatientNotesPreview(notes: $notes)
+      PatientNotesPreview(notes: notes)
         .contentShape(.rect)
     })
     .buttonStyle(.plain)
