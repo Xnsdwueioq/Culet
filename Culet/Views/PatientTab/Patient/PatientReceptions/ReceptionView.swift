@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ReceptionView: View {
+  var viewModel: PatientViewModel
   var reception: ReceptionsListSection
   
   var body: some View {
@@ -27,7 +28,10 @@ struct ReceptionView: View {
         ScrollView(.horizontal) {
           HStack {
             ForEach(reception.metrics) { metric in
-              MetricView(metric: metric)
+              Button(action: { viewModel.selectMetric(metric) } ) {
+                MetricPreview(metric: metric)
+              }
+              .buttonStyle(.plain)
             }
           }
           .padding()

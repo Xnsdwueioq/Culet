@@ -37,7 +37,7 @@ struct PatientView: View {
         // MARK: - Patient Receptions
         
         AddMetricView(viewModel: viewModel)
-        PatientReceptionsView(viewModel: $viewModel)
+        PatientReceptionsView(viewModel: viewModel)
         
         Spacer()
       }
@@ -47,6 +47,9 @@ struct PatientView: View {
     // MARK: - NavigationStack Config
     .navigationTitle(Text("Пациент"))
     .navigationBarTitleDisplayMode(.inline)
+    .navigationDestination(item: $viewModel.viewingMetric) { metric in
+      MetricDetailView(metric: metric)
+    }
     
     // MARK: - Toolbar
     .toolbar {

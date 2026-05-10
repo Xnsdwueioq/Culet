@@ -24,3 +24,13 @@ enum ReceptionMetric: Identifiable {
     }
   }
 }
+
+extension ReceptionMetric: Hashable {
+  static func == (lhs: ReceptionMetric, rhs: ReceptionMetric) -> Bool {
+    return lhs.id == rhs.id
+  }
+  
+  func hash(into hasher: inout Hasher) {
+    hasher.combine(self.id)
+  }
+}

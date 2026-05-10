@@ -3,12 +3,12 @@
 import SwiftUI
 
 struct PatientReceptionsView: View {
-  @Binding var viewModel: PatientViewModel
+  var viewModel: PatientViewModel
   
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
       ForEach(viewModel.receptions) { reception in
-        ReceptionView(reception: reception)
+        ReceptionView(viewModel: viewModel, reception: reception)
       }
       MedcardCreatedView(creationDate: viewModel.creationDate)
     }
@@ -19,7 +19,7 @@ struct PatientReceptionsView: View {
   ZStack {
     MainBackgroundView(isAnimationReduced: true)
     PatientReceptionsView(
-      viewModel: .constant(PatientViewModel(patient: PreviewDependenciesModifier.testPatient))
+      viewModel: PatientViewModel(patient: PreviewDependenciesModifier.testPatient)
     )
   }
 }

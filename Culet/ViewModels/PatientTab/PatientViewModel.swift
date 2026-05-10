@@ -9,7 +9,7 @@ final class PatientViewModel {
 
   var patient: Patient
   
-  // MARK: - Receptions Logic
+  // MARK: - Receptions & Metrics Logic
   var receptions: [ReceptionsListSection] {
     guard let receptions = patient.receptions else {
       return []
@@ -27,6 +27,22 @@ final class PatientViewModel {
           notes: reception.notes
         )
       }
+  }
+  
+  var metricWorkspaceState = MetricWorkspaceState.empty
+  
+  /// An item for destination, returns `ReceptionMetric`, if `metricWorkspaceState` contains it
+  var viewingMetric: ReceptionMetric? {
+    get {
+      if case .viewing(let metric) = metricWorkspaceState {
+        return metric
+      }
+      return nil
+    }
+    
+    set {
+      metricWorkspaceState = newValue.map { .viewing($0) } ?? .empty
+    }
   }
   
   // MARK: - Patient Profile Info
@@ -51,7 +67,7 @@ final class PatientViewModel {
     self.phoneCaller = phoneCaller
   }
   
-  // MARK: - Metrics Logic
+  // MARK: - Receptions & Metrics Logic
   
   // TODO: DEBUG func, will be replaced by navigation link with value-based pattern
   func createMetric(metric type: Metric) {
@@ -59,6 +75,10 @@ final class PatientViewModel {
     case .bodyProportion:
       print("CREATE BODY PROPORTION METRIC")
     }
+  }
+  
+  func selectMetric(_ metric: ReceptionMetric) {
+    metricWorkspaceState = .viewing(metric)
   }
   
   // MARK: - Toolbar Actions
