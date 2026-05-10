@@ -31,6 +31,7 @@ struct ReceptionView: View {
               Button(action: { viewModel.selectMetric(metric) } ) {
                 MetricPreview(metric: metric)
               }
+              .sensoryFeedback(.selection, trigger: viewModel.viewingMetric)
               .buttonStyle(.plain)
             }
           }
