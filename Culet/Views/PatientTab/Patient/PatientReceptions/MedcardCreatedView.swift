@@ -11,13 +11,30 @@ struct MedcardCreatedView: View {
   var creationDate: String
   
   var body: some View {
-    VStack {
+    VStack(alignment: .leading, spacing: 5) {
+      // MARK: Date
       Text(creationDate)
-        .bold()
-      Text("Медкарта создана")
         .foregroundStyle(.secondary)
+        .padding(.horizontal)
+        .bold()
+      
+      // MARK: Title
+      HStack {
+        Image(systemName: "person.text.rectangle")
+          .foregroundStyle(.brand)
+        Text("Медкарта создана")
+          .bold()
+        Spacer()
+      }
+        .padding()
+        .glassEffect(.clear, in: .rect(cornerRadius: 25))
     }
-    .padding()
-    .glassEffect(.clear, in: .rect(cornerRadius: 25))
+  }
+}
+
+#Preview {
+  ZStack {
+    MainBackgroundView(isAnimationReduced: true)
+    
   }
 }

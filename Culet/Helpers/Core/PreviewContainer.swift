@@ -18,13 +18,7 @@ struct PreviewContainer {
       
       let context = container.mainContext
       
-      let danil = Patient(
-        fullName: FullName(firstName: "Данил", lastName: "Самкраскин", middleName: "Федорович"),
-        birthday: Date(timeIntervalSince1970: 60*60*24*365*46),
-        sex: .male,
-        phoneNumber: "123-123-234",
-        creationDate: Date().advanced(by: -60*60*24*80)
-      )
+      let danil = PreviewDependenciesModifier.testPatient
       
       let sampleData = [
           // Сегодня
@@ -126,20 +120,6 @@ struct PreviewContainer {
           )
       ]
       
-      let rec1 = Reception(
-        date: Calendar.current.date(byAdding: .day, value: -30, to: .now)!,
-        notes: "Первичная диагностика. Замер базовых метрик."
-      )
-      rec1.patient = danil
-      rec1.bodyProportionMetrics.append(BodyProportionMetric(measuredAt: rec1.date))
-      
-      let rec2 = Reception(
-        date: Calendar.current.date(byAdding: .day, value: -2, to: .now)!,
-        notes: "Повторный прием после курса упражнений."
-      )
-      rec2.patient = danil
-      rec2.bodyProportionMetrics.append(BodyProportionMetric(measuredAt: rec2.date))
-      
       for patient in sampleData {
         context.insert(patient)
       }
@@ -172,15 +152,7 @@ struct PreviewContainer {
       
       let context = container.mainContext
       
-      let sampleData = [
-        Patient(
-          fullName: FullName(firstName: "Данил", lastName: "Самкраскин", middleName: "Федорович"),
-          birthday: Date(timeIntervalSince1970: 60*60*24*365*46),
-          sex: .male,
-          phoneNumber: "123-123-234",
-          creationDate: Date().advanced(by: -60*60*24*80)
-        )
-      ]
+      let sampleData = [PreviewDependenciesModifier.testPatient]
       
       for patient in sampleData {
         context.insert(patient)

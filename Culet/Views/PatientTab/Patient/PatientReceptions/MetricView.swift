@@ -9,11 +9,17 @@ import SwiftUI
 
 struct MetricView: View {
   var metric: ReceptionMetric
+  let squareSide: CGFloat = 80
   
   var body: some View {
-    HStack {
-      Image(metric.icon)
-      Text(metric.displayName)
+    ZStack {
+      RoundedRectangle(cornerRadius: 15)
+        .foregroundStyle(.secondary)
+      Image(systemName: metric.icon)
+        .resizable()
+        .aspectRatio(contentMode: .fit)
+        .padding()
     }
+    .frame(width: squareSide, height: squareSide)
   }
 }

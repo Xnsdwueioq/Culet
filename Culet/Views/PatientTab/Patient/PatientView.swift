@@ -17,30 +17,33 @@ struct PatientView: View {
   }
   
   var body: some View {
-    VStack(spacing: 20) {
-      // MARK: - General Info
-      VStack {
-        if case .editing(let patient) = appSession.patientWorkspaceState {
-          // MARK: Patient Form for Edit
-          PatientFormView(patient: patient)
-            .padding(.bottom, 25)
-        } else {
-          // MARK: Patient Profile
-          PatientProfileView(viewModel: viewModel)
+    ScrollView {
+      VStack(spacing: 20) {
+        // MARK: - General Info
+        VStack {
+          if case .editing(let patient) = appSession.patientWorkspaceState {
+            // MARK: Patient Form for Edit
+            PatientFormView(patient: patient)
+              .padding(.bottom, 25)
+          } else {
+            // MARK: Patient Profile
+            PatientProfileView(viewModel: viewModel)
+          }
         }
+        
+        // MARK: - Patient Notes
+        PatientNotesButton(notes: $viewModel.patient.notes)
+        
+        // MARK: - Patient Receptions
+        
+        AddMetricView(viewModel: viewModel)
+        PatientReceptionsView(viewModel: $viewModel)
+        
+        Spacer()
       }
-      
-      // MARK: - Patient Notes
-      PatientNotesButton(notes: $viewModel.patient.notes)
-      
-      // MARK: - Patient Receptions
-      
-      AddMetricView(viewModel: viewModel)
-      PatientReceptionsView(viewModel: $viewModel)
-      
-      Spacer()
+      .padding(.horizontal)
     }
-    .padding(.horizontal)
+    .scrollIndicators(.hidden)
     // MARK: - NavigationStack Config
     .navigationTitle(Text("Пациент"))
     .navigationBarTitleDisplayMode(.inline)

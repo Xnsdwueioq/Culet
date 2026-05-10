@@ -11,19 +11,38 @@ struct ReceptionView: View {
   var reception: ReceptionsListSection
   
   var body: some View {
-    VStack {
-      // MARK: - Header of Reception View
-      Text(reception.date.formatted(date: .numeric, time: .shortened))
-        .bold()
-      Text(reception.notes)
-        .foregroundStyle(.secondary)
-      
-      // MARK: - Metrics List
-      ForEach(reception.metrics) { metric in
-        MetricView(metric: metric)
+    VStack(spacing: 5) {
+      // MARK: - Last Metric Date
+      HStack {
+        Text(reception.date.formatted(date: .numeric, time: .shortened))
+          .bold()
+          .foregroundStyle(.secondary)
+        Spacer()
       }
+      .padding(.horizontal)
+      
+      // MARK: - Section
+      VStack(alignment: .leading, spacing: 0) {
+        // MARK: Metrics List
+        ScrollView(.horizontal) {
+          HStack {
+            ForEach(reception.metrics) { metric in
+              MetricView(metric: metric)
+            }
+          }
+          .padding()
+        }
+        
+        if !reception.notes.isEmpty{
+          Divider()
+          
+          // MARK: Notes
+          Text(reception.notes)
+            .foregroundStyle(.secondary)
+            .padding()
+        }
+      }
+      .glassEffect(.clear, in: .rect(cornerRadius: 25))
     }
-    .padding()
-    .glassEffect(.clear, in: .rect(cornerRadius: 25))
   }
 }

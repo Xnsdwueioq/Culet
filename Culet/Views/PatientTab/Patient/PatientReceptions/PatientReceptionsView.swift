@@ -6,7 +6,7 @@ struct PatientReceptionsView: View {
   @Binding var viewModel: PatientViewModel
   
   var body: some View {
-    VStack {
+    VStack(alignment: .leading, spacing: 20) {
       ForEach(viewModel.receptions) { reception in
         ReceptionView(reception: reception)
       }
@@ -16,7 +16,10 @@ struct PatientReceptionsView: View {
 }
 
 #Preview {
-  PatientReceptionsView(
-    viewModel: .constant(PatientViewModel(patient: PreviewDependenciesModifier.testPatient))
-  )
+  ZStack {
+    MainBackgroundView(isAnimationReduced: true)
+    PatientReceptionsView(
+      viewModel: .constant(PatientViewModel(patient: PreviewDependenciesModifier.testPatient))
+    )
+  }
 }

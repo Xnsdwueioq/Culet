@@ -41,7 +41,7 @@ extension PreviewDependenciesModifier {
     )
     let rec1 = Reception(
       date: Calendar.current.date(byAdding: .day, value: -30, to: .now)!,
-      notes: "Первичная диагностика. Замер базовых метрик."
+      notes: ""
     )
     rec1.patient = danil
     rec1.bodyProportionMetrics.append(BodyProportionMetric(measuredAt: rec1.date))
@@ -52,6 +52,9 @@ extension PreviewDependenciesModifier {
     )
     rec2.patient = danil
     rec2.bodyProportionMetrics.append(BodyProportionMetric(measuredAt: rec2.date))
+    rec2.bodyProportionMetrics.append(BodyProportionMetric(measuredAt: rec2.date.advanced(by: 60*60)))
+    rec2.bodyProportionMetrics.append(BodyProportionMetric(measuredAt: rec2.date.advanced(by: 60*60*2)))
+    rec2.bodyProportionMetrics.append(BodyProportionMetric(measuredAt: rec2.date.advanced(by: 60*60*3)))
     
     return danil
   }
