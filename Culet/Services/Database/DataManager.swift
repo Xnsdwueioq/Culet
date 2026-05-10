@@ -27,7 +27,7 @@ final class DataManager: PatientStorageService {
     do {
       try modelContext.delete(model: Patient.self)
     } catch {
-      Logger.database.error("Delete all patients failed.")
+      Logger.database.error("Delete all models failed.")
       throw DatabaseError.deleteAllError
     }
   }

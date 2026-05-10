@@ -18,6 +18,7 @@ struct PatientView: View {
   
   var body: some View {
     VStack(spacing: 20) {
+      // MARK: - General Info
       VStack {
         if case .editing(let patient) = appSession.patientWorkspaceState {
           // MARK: Patient Form for Edit
@@ -29,10 +30,12 @@ struct PatientView: View {
         }
       }
       
-      // MARK: Patient Notes
+      // MARK: - Patient Notes
       PatientNotesButton(notes: $viewModel.patient.notes)
       
-      // MARK: Patient Receptions
+      // MARK: - Patient Receptions
+      
+      AddMetricView(viewModel: viewModel)
       PatientReceptionsView(viewModel: $viewModel)
       
       Spacer()

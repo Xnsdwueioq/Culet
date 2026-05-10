@@ -6,9 +6,10 @@ import SwiftData
 @Observable
 final class PatientViewModel {
   var phoneCaller: CallPatientUseCase
-  
+
   var patient: Patient
   
+  // MARK: - Receptions Logic
   var receptions: [ReceptionsListSection] {
     guard let receptions = patient.receptions else {
       return []
@@ -48,6 +49,16 @@ final class PatientViewModel {
   init(patient: Patient, phoneCaller: CallPatientUseCase = CallPatientUseCase()) {
     self.patient = patient
     self.phoneCaller = phoneCaller
+  }
+  
+  // MARK: - Metrics Logic
+  
+  // TODO: DEBUG func, will be replaced by navigation link with value-based pattern
+  func createMetric(metric type: Metric) {
+    switch type {
+    case .bodyProportion:
+      print("CREATE BODY PROPORTION METRIC")
+    }
   }
   
   // MARK: - Toolbar Actions

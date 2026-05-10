@@ -4,11 +4,11 @@ import SwiftUI
 import SwiftData
 
 @Model
-final class BodyProportionMetric: Metric {
+final class BodyProportionMetric: MetricProtocol {
   var measuredAt: Date = Date()
   var reception: Reception?
   
-  // METRICS
+  // Measurements
     
   init(measuredAt: Date, reception: Reception? = nil) {
     self.measuredAt = measuredAt

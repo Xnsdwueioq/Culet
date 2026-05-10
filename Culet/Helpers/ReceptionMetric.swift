@@ -14,13 +14,13 @@ enum ReceptionMetric: Identifiable {
   
   var displayName: String {
     switch self {
-    case .bodyProportion: "Измерение пропорций тела"
+    case .bodyProportion: Metric.bodyProportion.rawValue
     }
   }
   
   var icon: String {
     switch self {
-    case .bodyProportion: "figure.stand"
+    case .bodyProportion: Metric.bodyProportion.icon
     }
   }
 }
